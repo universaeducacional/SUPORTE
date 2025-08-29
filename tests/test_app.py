@@ -13,18 +13,23 @@ def test_streamlit_app():
         stderr=subprocess.PIPE,
     )
 
-    # 2️⃣ Espera o servidor subir
-    time.sleep(15)  # 15 segundos para garantir que o app esteja online
-
-    # 3️⃣ Verifica se a página responde (opcional)
-    try:
-        resp = requests.get("http://localhost:8501")
-        assert resp.status_code == 200
-    except Exception as e:
+    # 2️⃣ Espera o servidor subir com healthcheck
+    url = "http://localhost:8501"
+    for i in range(60):  # tenta até 60 vezes (~1 min)
+        try:
+            resp = requests.get(url)
+            if resp.status_code == 200:
+                print("✅ Streamlit subiu!")
+                break
+        except requests.exceptions.ConnectionError:
+            pass
+        print(f"⏳ Esperando Streamlit subir... ({i+1}/60)")
+        time.sleep(1)
+    else:
         process.terminate()
-        raise e
+        raise Exception("Streamlit não respondeu a tempo")
 
-    # 4️⃣ Configura o Selenium em modo headless
+    # 3️⃣ Configura o Selenium em modo headless
     options = Options()
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
@@ -33,10 +38,10 @@ def test_streamlit_app():
     service = Service("/usr/bin/chromedriver")  # caminho do Chromedriver no GitHub Actions
     driver = webdriver.Chrome(service=service, options=options)
 
-    # 5️⃣ Abre o app via Selenium
-    driver.get("http://localhost:8501")
+    # 4️⃣ Abre o app via Selenium
+    driver.get(url)
     assert "Streamlit" in driver.title  # verifica se o título contém "Streamlit"
 
-    # 6️⃣ Finaliza
+    # 5️⃣ Finaliza
     driver.quit()
     process.terminate()
