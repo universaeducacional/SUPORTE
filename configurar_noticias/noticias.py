@@ -33,6 +33,11 @@ DATA_FIM = os.getenv("DATA_FIM")
 st.session_state["usuario"] = st.text_input("Usuário:", value=st.session_state.get("usuario",""))
 st.session_state["senha"] = st.text_input("Senha:", value=st.session_state.get("senha",""), type="password")
 
+
+# URLS
+with open('urls.json', 'r') as f:
+    data = json.load(f)
+
 #abrir o navegador  
 navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()))         
 wait = WebDriverWait(navegador, 10)  # ⬅️ cria o "esperador"
@@ -41,21 +46,15 @@ wait = WebDriverWait(navegador, 10)  # ⬅️ cria o "esperador"
 navegador.maximize_window()
 
 
-
-time.sleep(45)
-
-
-
 # --- Botão para iniciar o Selenium ---
 if st.button("Executar processo"):
     usuario = st.session_state["usuario"]
     senha = st.session_state["senha"]
     
+    time.sleep(20)
+    
     st.write("Executando processo com Selenium...")
     
-    # URLS
-    with open('urls.json', 'r') as f:
-        data = json.load(f)
     
     for url in data.get('urls', []):  # assumindo que o JSON tem algo como {"logins": ["url1", "url2"]}
         print(f"Abrindo {url} ...")
