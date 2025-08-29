@@ -29,10 +29,10 @@ jobs:
 
       - name: Subir Streamlit em background
         run: |
-          nohup streamlit run noticias.py --server.port 8501 > streamlit.log 2>&1 &
-          
-          # tenta conectar até 60 vezes (~1 min)
-          for i in {1..60}; do
+          nohup streamlit run app.py --server.port 8501 > streamlit.log 2>&1 &
+    
+          # tenta conectar até 120 vezes (~2 minutos)
+          for i in {1..120}; do
             if curl -s http://localhost:8501 > /dev/null; then
               echo "✅ Streamlit está de pé!"
               break
@@ -41,9 +41,9 @@ jobs:
             sleep 1
           done
           
-          # Mostra os primeiros logs (debug)
           head -n 30 streamlit.log
 
       - name: Rodar testes
         run: |
           pytest tests/ -v
+
