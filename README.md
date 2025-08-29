@@ -3,6 +3,19 @@
 Este repositório armazena processos de configuração e testes automatizados realizados pelo Suporte.
 
 
+## Pré-requisitos
+
+Antes de rodar este projeto, você precisa ter instalado:
+
+- [Git](https://git-scm.com/) (para clonar o repositório)
+- [Python 3.12](https://www.python.org/downloads/) (ou outra versão necessária)
+- Bibliotecas necessárias:
+  ```bash
+  pip install -r requirements.txt
+  ```
+- Editor de código
+
+
 ## Instalação e execução
 
 Configurar o git para o usuário ao qual irá realizar a clonagem do repositório:
@@ -45,6 +58,8 @@ git add.
 git commit -m “Informação do commit”
 git push origin main
 ```
+
+
 
 
 
