@@ -41,8 +41,9 @@ cd C:\caminho\da\pasta\do\processo
 Caso sejam realizadas atualizações nos arquivos, realize o commit pelo powershell com os seguintes comandos:
 
 ```bash
-Acesse a pasta do processo que quer executar
-cd C:\caminho\da\pasta\do\processo
+git add.
+git commit -m “Informação do commit”
+git push origin main
 ```
 
 
