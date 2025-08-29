@@ -1,6 +1,7 @@
 name: Selenium Tests
 
-on: [push, pull_request]
+on:
+  workflow_dispatch:
 
 jobs:
   test:
@@ -28,5 +29,4 @@ jobs:
 
       - name: Rodar testes
         run: |
-
           pytest tests/ -v
