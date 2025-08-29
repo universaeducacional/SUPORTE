@@ -62,6 +62,7 @@ git push origin main
 
 ## Estrutura de Pastas
 
+```
 SUPORTE/
 ├── .github/workflows/ # Workflows do GitHub Actions (CI/CD, automação de testes e deploy)
 │ ├── python-package.yml
@@ -74,7 +75,7 @@ SUPORTE/
 │ └── test_app.py
 ├── README.md # Este arquivo, com informações sobre o projeto
 └── requirements.txt # Lista de dependências do Python para instalar com pip
-
+```
 
 
 ## Configurações
