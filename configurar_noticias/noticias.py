@@ -30,34 +30,20 @@ DATA_FIM = os.getenv("DATA_FIM")
 
 
 # --- Inputs de login ---
-if "usuario" not in st.session_state:
-    st.session_state["usuario"] = ""
-if "senha" not in st.session_state:
-    st.session_state["senha"] = ""
-
-st.session_state["usuario"] = st.text_input("Usuário:", value=st.session_state.get("usuario",""))
-st.session_state["senha"] = st.text_input("Senha:", value=st.session_state.get("senha",""), type="password")
+usuario = st.text_input("Usuário:", value=st.session_state.get("usuario",""))
+senha = st.text_input("Senha:", value=st.session_state.get("senha",""), type="password")
 
 
 
 
 # --- Botão para iniciar o Selenium ---
 if st.button("Executar processo"):
-    usuario = st.session_state["usuario"]
-    senha = st.session_state["senha"]
-    
     st.write("Executando processo com Selenium...")
     
-    # Se o navegador ainda não existe, cria e salva no session_state
-    if "navegador" not in st.session_state:
-        st.session_state.navegador = webdriver.Chrome(
-            service=Service(ChromeDriverManager().install())
-        )
-        st.session_state.wait = WebDriverWait(st.session_state.navegador, 10)
-        st.session_state.navegador.maximize_window()
-
-    navegador = st.session_state.navegador
-    wait = st.session_state.wait
+    # Cria navegador só dentro do clique
+    navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    navegador.maximize_window()
+    wait = WebDriverWait(navegador, 10)
     
     
     # URLS
