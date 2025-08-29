@@ -40,6 +40,12 @@ wait = WebDriverWait(navegador, 10)  # ⬅️ cria o "esperador"
 # colocar o navegador em tela cheia
 navegador.maximize_window()
 
+
+
+time.sleep(45)
+
+
+
 # --- Botão para iniciar o Selenium ---
 if st.button("Executar processo"):
     usuario = st.session_state["usuario"]
@@ -47,14 +53,11 @@ if st.button("Executar processo"):
     
     st.write("Executando processo com Selenium...")
     
-    
-    
-    
     # URLS
     with open('urls.json', 'r') as f:
         data = json.load(f)
     
-    for url in data["logins"]:  # assumindo que o JSON tem algo como {"logins": ["url1", "url2"]}
+    for url in data.get('urls', []):  # assumindo que o JSON tem algo como {"logins": ["url1", "url2"]}
         print(f"Abrindo {url} ...")
         navegador.get(url)
         
