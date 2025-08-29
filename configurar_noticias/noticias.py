@@ -39,24 +39,23 @@ st.session_state["usuario"] = st.text_input("Usuário:", value=st.session_state.
 st.session_state["senha"] = st.text_input("Senha:", value=st.session_state.get("senha",""), type="password")
 
 
-with open('urls.json', 'r') as f:
-    data = json.load(f)
-
-
-# abrir o navegador  
-navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    
-wait = WebDriverWait(navegador, 10)  # ⬅️ cria o "esperador"
-    
-# colocar o navegador em tela cheia
-navegador.maximize_window()
-
 # --- Botão para iniciar o Selenium ---
 if st.button("Executar processo"):
     usuario = st.session_state["usuario"]
     senha = st.session_state["senha"]
     
-    st.write("Executando processo com Selenium...")
+    st.write("Executando processo com Selenium..."),
+    
+    # URLS
+    with open('urls.json', 'r') as f:
+        data = json.load(f)
+        
+    #abrir o navegador  
+    navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()))         
+    wait = WebDriverWait(navegador, 10)  # ⬅️ cria o "esperador"
+                
+    # colocar o navegador em tela cheia
+    navegador.maximize_window()
     
     for url in data.get('urls', []):  # assumindo que o JSON tem algo como {"logins": ["url1", "url2"]}
         print(f"Abrindo {url} ...")
@@ -66,10 +65,7 @@ if st.button("Executar processo"):
             # Ajusta o seletor para algo que aparece quando a página tá pronta
             elemento = wait.until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
             print(f"Página carregada em {url}!")
-            # acessar um site
-           # service = Service(r"C:\chromedriver-win64\chromedriver.exe")
-
-
+            
             # selecionar um elemento na tela
             entrar = navegador.find_element(By.CLASS_NAME, "arrow-wrapper")
 
@@ -234,7 +230,7 @@ if st.button("Executar processo"):
             )
 
             #digita o valor da busca
-            search_input.send_keys("Home -Noticias")
+            search_input.send_keys("admin")
 
             # esoera o li aparecer e seleciona o nome do grupo
             item = wait.until(EC.element_to_be_clickable((
