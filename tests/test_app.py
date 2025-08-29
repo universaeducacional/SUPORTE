@@ -10,12 +10,14 @@ def test_streamlit_app():
     process = subprocess.Popen(
         ["streamlit", "run", "noticias.py", "--server.port", "8501"],
         stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True
     )
 
-    # 2️⃣ Espera o servidor subir com healthcheck
     url = "http://localhost:8501"
-    for i in range(60):  # tenta até 60 vezes (~1 min)
+
+    # 2️⃣ Healthcheck: tenta até 60 vezes (~1 min)
+    for i in range(60):
         try:
             resp = requests.get(url)
             if resp.status_code == 200:
@@ -26,21 +28,25 @@ def test_streamlit_app():
         print(f"⏳ Esperando Streamlit subir... ({i+1}/60)")
         time.sleep(1)
     else:
+        # Se não subir, captura os logs e termina o processo
+        out, _ = process.communicate(timeout=5)
+        print("=== LOGS DO STREAMLIT ===")
+        print(out)
         process.terminate()
         raise Exception("Streamlit não respondeu a tempo")
 
-    # 3️⃣ Configura o Selenium em modo headless
+    # 3️⃣ Configura Selenium em modo headless
     options = Options()
     options.add_argument("--headless")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
 
-    service = Service("/usr/bin/chromedriver")  # caminho do Chromedriver no GitHub Actions
+    service = Service("/usr/bin/chromedriver")  # ajuste pro GitHub Actions
     driver = webdriver.Chrome(service=service, options=options)
 
     # 4️⃣ Abre o app via Selenium
     driver.get(url)
-    assert "Streamlit" in driver.title  # verifica se o título contém "Streamlit"
+    assert "Streamlit" in driver.title
 
     # 5️⃣ Finaliza
     driver.quit()
