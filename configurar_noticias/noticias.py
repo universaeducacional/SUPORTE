@@ -48,12 +48,16 @@ if st.button("Executar processo"):
     
     st.write("Executando processo com Selenium...")
     
-    #abrir o navegador  
-    navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()))         
-    wait = WebDriverWait(navegador, 10)  # ⬅️ cria o "esperador"
-                
-    # colocar o navegador em tela cheia
-    navegador.maximize_window()
+    # Se o navegador ainda não existe, cria e salva no session_state
+    if "navegador" not in st.session_state:
+        st.session_state.navegador = webdriver.Chrome(
+            service=Service(ChromeDriverManager().install())
+        )
+        st.session_state.wait = WebDriverWait(st.session_state.navegador, 10)
+        st.session_state.navegador.maximize_window()
+
+    navegador = st.session_state.navegador
+    wait = st.session_state.wait
     
     
     # URLS
