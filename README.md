@@ -60,6 +60,34 @@ git push origin main
 ```
 
 
+## Estrutura de Pastas
+
+SUPORTE/
+├── .github/workflows/ # Workflows do GitHub Actions (CI/CD, automação de testes e deploy)
+│ ├── python-package.yml
+│ └── selenium.yml
+├── configurar_noticias/ # Scripts ou módulos para configuração e gerenciamento de notícias
+│ ├── dados_formulario.env
+│ ├── noticias.py
+│ └── urls.json
+├── tests/ # Testes automatizados da aplicação
+│ └── test_app.py
+├── README.md # Este arquivo, com informações sobre o projeto
+└── requirements.txt # Lista de dependências do Python para instalar com pip
+
+
+
+## Configurações
+
+Este projeto utiliza variáveis de ambiente para armazenar informações das configurações das notícias. Com os seguintes dados:
+
+```env
+TITULO = titulonoticia
+HTML = htmldanoticia
+DATA_INICIO = datainicionoticia
+DATA_FIM = datafimnoticia
+```
+
 
 
 
