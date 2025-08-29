@@ -15,6 +15,10 @@ import streamlit as st
 import subprocess
 import requests
 
+
+# Cria o driver apontando pro manager
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+
 # localicar o caminho do .env para preenchimento dos dados necessários para a configuração
 load_dotenv(dotenv_path="C:/Users/Educacional-Suporte/Desktop/Repositorios/configurar_noticias/dados_formulario.env")
 
