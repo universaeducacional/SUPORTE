@@ -68,9 +68,10 @@ SUPORTE/
 │ ├── python-package.yml
 │ └── selenium.yml
 ├── configurar_noticias/ # Scripts ou módulos para configuração e gerenciamento de notícias
-│ ├── dados_formulario.env
+│ ├── README Noticias.md # Processo de execução da automatização
+│ ├── dados_formulario.env # Formulário para preenchimento dos dados da notícia a ser configurada
 │ ├── noticias.py
-│ └── urls.json
+│ └── urls.json # URL's dos ambientes em que será realizado o processo
 ├── tests/ # Testes automatizados da aplicação
 │ └── test_app.py
 ├── README.md # Este arquivo, com informações sobre o projeto
