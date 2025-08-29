@@ -39,25 +39,28 @@ st.session_state["usuario"] = st.text_input("Usuário:", value=st.session_state.
 st.session_state["senha"] = st.text_input("Senha:", value=st.session_state.get("senha",""), type="password")
 
 
-#abrir o navegador  
-navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()))         
-wait = WebDriverWait(navegador, 10)  # ⬅️ cria o "esperador"
-            
-# colocar o navegador em tela cheia
-navegador.maximize_window()
+
 
 # --- Botão para iniciar o Selenium ---
 if st.button("Executar processo"):
     usuario = st.session_state["usuario"]
     senha = st.session_state["senha"]
     
-    st.write("Executando processo com Selenium..."),
+    st.write("Executando processo com Selenium...")
+    
+    #abrir o navegador  
+    navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()))         
+    wait = WebDriverWait(navegador, 10)  # ⬅️ cria o "esperador"
+                
+    # colocar o navegador em tela cheia
+    navegador.maximize_window()
+    
     
     # URLS
     with open('urls.json', 'r') as f:
         data = json.load(f)
     
-    for url in data.get('urls', []):  # assumindo que o JSON tem algo como {"logins": ["url1", "url2"]}
+    for url in data["logins"]:  # assumindo que o JSON tem algo como {"logins": ["url1", "url2"]}
         print(f"Abrindo {url} ...")
         navegador.get(url)
         
@@ -235,7 +238,7 @@ if st.button("Executar processo"):
             # esoera o li aparecer e seleciona o nome do grupo
             item = wait.until(EC.element_to_be_clickable((
                 By.XPATH,
-                "//ul/li[.//text()[normalize-space()='Home -Noticias']]"
+                "//ul/li[.//text()[normalize-space()='admin']]"
             )))
             item.click()
 
