@@ -44,7 +44,7 @@ with open('urls.json', 'r') as f:
     data = json.load(f)
     
 
-for url in data["logins"]:  # assumindo que o JSON tem algo como {"logins": ["url1", "url2"]}
+for url in data.get('urls', []):  # assumindo que o JSON tem algo como {"logins": ["url1", "url2"]}
     print(f"Abrindo {url} ...")
     navegador.get(url)
     
