@@ -78,16 +78,6 @@ SUPORTE/
 ```
 
 
-## Configurações
-
-Este projeto utiliza variáveis de ambiente para armazenar informações das configurações das notícias. Com os seguintes dados:
-
-```env
-TITULO = titulonoticia
-HTML = htmldanoticia
-DATA_INICIO = datainicionoticia
-DATA_FIM = datafimnoticia
-```
 
 
 
