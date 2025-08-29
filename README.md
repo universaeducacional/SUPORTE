@@ -11,6 +11,10 @@ Antes de rodar este projeto, você precisa ter instalado:
 - [Python 3.12](https://www.python.org/downloads/) (ou outra versão necessária)
 - Bibliotecas necessárias:
   ```bash
+  pip install streamlit
+  pip install selenium
+  pip install pytest
+  pip install requests
   pip install -r requirements.txt
   ```
 - Editor de código
