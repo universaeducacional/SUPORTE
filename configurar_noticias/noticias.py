@@ -20,7 +20,7 @@ import requests
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 # localicar o caminho do .env para preenchimento dos dados necessários para a configuração
-load_dotenv(dotenv_path="C:/Users/Educacional-Suporte/Desktop/Repositorios/configurar_noticias/dados_formulario.env")
+load_dotenv(dotenv_path="C:/Users/Educacional-Suporte/.git/SUPORTE/configurar_noticias/dados_formulario.env")
 
 # valores das variáveis
 TITULO = os.getenv("TITULO")
@@ -39,6 +39,13 @@ st.session_state["usuario"] = st.text_input("Usuário:", value=st.session_state.
 st.session_state["senha"] = st.text_input("Senha:", value=st.session_state.get("senha",""), type="password")
 
 
+#abrir o navegador  
+navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()))         
+wait = WebDriverWait(navegador, 10)  # ⬅️ cria o "esperador"
+            
+# colocar o navegador em tela cheia
+navegador.maximize_window()
+
 # --- Botão para iniciar o Selenium ---
 if st.button("Executar processo"):
     usuario = st.session_state["usuario"]
@@ -49,13 +56,6 @@ if st.button("Executar processo"):
     # URLS
     with open('urls.json', 'r') as f:
         data = json.load(f)
-        
-    #abrir o navegador  
-    navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()))         
-    wait = WebDriverWait(navegador, 10)  # ⬅️ cria o "esperador"
-                
-    # colocar o navegador em tela cheia
-    navegador.maximize_window()
     
     for url in data.get('urls', []):  # assumindo que o JSON tem algo como {"logins": ["url1", "url2"]}
         print(f"Abrindo {url} ...")
