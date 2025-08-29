@@ -8,7 +8,7 @@ import requests
 def test_streamlit_app():
     # 1️⃣ Inicia o Streamlit em background (porta 8501)
     process = subprocess.Popen(
-        ["streamlit", "run", "noticias.py", "--server.port", "8501"],
+        ["streamlit", "run", "configurar_noticias/noticias.py", "--server.port", "8501"],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True
@@ -51,3 +51,4 @@ def test_streamlit_app():
     # 5️⃣ Finaliza
     driver.quit()
     process.terminate()
+
