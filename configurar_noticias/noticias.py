@@ -20,7 +20,7 @@ import requests
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 # localicar o caminho do .env para preenchimento dos dados necessários para a configuração
-load_dotenv(dotenv_path="C:/Users/Educacional-Suporte/.git/SUPORTE/configurar_noticias/dados_formulario.env")
+load_dotenv(dotenv_path="./load_dotenv(dotenv_path=./configurar_noticias/dados_formulario.env")
 
 # valores das variáveis
 TITULO = os.getenv("TITULO")
@@ -206,4 +206,5 @@ if st.button("Executar processo"):
 
     
 print("Processo finalizado, fechando navegador.")
+
 navegador.quit() 
