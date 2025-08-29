@@ -29,14 +29,6 @@ DATA_INICIO = os.getenv("DATA_INICIO")
 DATA_FIM = os.getenv("DATA_FIM")
 
 
- # abrir o navegador  
-navegador = webdriver.Chrome()
-    
-wait = WebDriverWait(navegador, 10)  # ⬅️ cria o "esperador"
-    
-    # colocar o navegador em tela cheia
-navegador.maximize_window()
-
 # --- Inputs de login ---
 if "usuario" not in st.session_state:
     st.session_state["usuario"] = ""
@@ -50,6 +42,14 @@ st.session_state["senha"] = st.text_input("Senha:", value=st.session_state.get("
 with open('urls.json', 'r') as f:
     data = json.load(f)
 
+
+# abrir o navegador  
+navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    
+wait = WebDriverWait(navegador, 10)  # ⬅️ cria o "esperador"
+    
+# colocar o navegador em tela cheia
+navegador.maximize_window()
 
 # --- Botão para iniciar o Selenium ---
 if st.button("Executar processo"):
@@ -67,7 +67,7 @@ if st.button("Executar processo"):
             elemento = wait.until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
             print(f"Página carregada em {url}!")
             # acessar um site
-            service = Service(r"C:\chromedriver-win64\chromedriver.exe")
+           # service = Service(r"C:\chromedriver-win64\chromedriver.exe")
 
 
             # selecionar um elemento na tela
