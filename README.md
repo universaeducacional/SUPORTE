@@ -13,7 +13,6 @@ Antes de rodar este projeto, você precisa ter instalado:
   ```bash
   pip install streamlit
   pip install selenium
-  pip install pytest
   pip install requests
   pip install -r requirements.txt
   ```
