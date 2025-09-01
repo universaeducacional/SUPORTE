@@ -3,4 +3,3 @@ selenium
 webdriver-manager
 python-dotenv
 requests
-pytest
