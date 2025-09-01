@@ -59,3 +59,12 @@ jobs:
           chromedriver --version
 
 
+      - name: Verificar Chrome e Chromedriver
+        run: |
+          which chromium-browser
+          which chromium
+          which chromedriver
+          chromium-browser --version
+          chromedriver --version
+
+
