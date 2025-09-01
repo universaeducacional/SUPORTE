@@ -55,4 +55,7 @@ jobs:
               libnss3 libgconf-2-4 libxss1 libappindicator1 libindicator7
           which chromium-browser
           which chromedriver
+          chromium-browser --version
+          chromedriver --version
+
 
