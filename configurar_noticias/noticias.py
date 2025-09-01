@@ -22,9 +22,14 @@ with st.form("login_form"):
     usuario = st.text_input("Usuário")
     senha = st.text_input("Senha", type="password")
     submit = st.form_submit_button("Abrir páginas no Chrome")
-    
-with open('urls.json', 'r') as f:
-            arquivo = json.load(f)
+
+
+base_path = os.path.dirname(__file__)  # pega o diretório do app.py    
+with open(os.path.join(base_path, 'urls.json'), 'r') as f:
+    arquivo = json.load(f)
+            
+            
+            
 if submit:
     st.success("Abrindo página e tentando login automático...")
     
