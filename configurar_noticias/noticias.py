@@ -262,8 +262,8 @@ if submit:
                 st.warning(f"Não consegui logar em {url}. Confira os seletores!")
                 st.error(str(e))
     
-print("Processo finalizado, fechando navegador.")
+        print("Processo finalizado, fechando navegador.")
 
-navegador.quit() 
+        navegador.quit() 
 
 
