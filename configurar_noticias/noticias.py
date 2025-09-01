@@ -115,7 +115,7 @@ if submit:
 
 
             # Ajusta o seletor para algo que aparece quando a página tá pronta
-           # elemento = wait.until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
+            elemento = wait.until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
            # print(f"Página carregada em {url}!")
 
             # selecionar um elemento na tela

@@ -48,3 +48,11 @@ jobs:
           pytest tests/ -v || echo "Nenhum teste encontrado, continuando..."
 
 
+      - name: Instalar Chromium e dependências
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser chromium-chromedriver \
+              libnss3 libgconf-2-4 libxss1 libappindicator1 libindicator7
+          which chromium-browser
+          which chromedriver
+
