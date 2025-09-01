@@ -21,9 +21,10 @@ st.title("Portal de acesso automático")
 with st.form("login_form"):
     usuario = st.text_input("Usuário")
     senha = st.text_input("Senha", type="password")
-    arquivo = st.file_uploader("Escolha o arquivo JSON com as URLs", type="json")
     submit = st.form_submit_button("Abrir páginas no Chrome")
-
+    
+with open('urls.json', 'r') as f:
+            arquivo = json.load(f)
 if submit:
     st.success("Abrindo página e tentando login automático...")
     
