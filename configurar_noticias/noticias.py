@@ -28,7 +28,13 @@ base_path = os.path.dirname(__file__)  # pega o diretório do app.py
 with open(os.path.join(base_path, 'urls.json'), 'r') as f:
     arquivo = json.load(f)
             
-            
+
+ # --- Inicializar Selenium ---
+options = webdriver.ChromeOptions()
+# options.add_argument("--headless")  # se quiser rodar sem mostrar navegador
+navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+navegador.maximize_window()
+wait = WebDriverWait(navegador, 10)        
             
 if submit:
     st.success("Abrindo página e tentando login automático...")
@@ -52,16 +58,7 @@ if submit:
     
     for u in urls:
         st.write(u)
-        
-        
-    # --- Inicializar Selenium ---
-    options = webdriver.ChromeOptions()
-    # options.add_argument("--headless")  # se quiser rodar sem mostrar navegador
-    navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-    navegador.maximize_window()
-    wait = WebDriverWait(navegador, 10)
-
-
+     
     #abrir o navegador  
     #navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()))         
     #wait = WebDriverWait(navegador, 10)  # ⬅️ cria o "esperador"
