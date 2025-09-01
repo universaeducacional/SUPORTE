@@ -16,7 +16,7 @@ import subprocess
 import requests
 
 
-st.title("Portal de Acesso Automático")
+st.title("Portal de acesso automático")
 
 with st.form("login_form"):
     usuario = st.text_input("Usuário")
