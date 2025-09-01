@@ -57,7 +57,8 @@ if submit:
         # options.add_argument("--headless")  # descomente se não quiser abrir a janela
         options.binary_location = "/usr/bin/chromium-browser"  # necessário no Linux
         st.session_state.navegador = webdriver.Chrome(
-            service=Service(ChromeDriverManager().install()), options=options
+            service=Service("/usr/bin/chromedriver"), 
+            options=options
         )
         st.session_state.navegador.maximize_window()
         st.session_state.wait = WebDriverWait(st.session_state.navegador, 10)
