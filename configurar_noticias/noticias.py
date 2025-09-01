@@ -24,23 +24,8 @@ with st.form("login_form"):
     submit = st.form_submit_button("Abrir páginas no Chrome")
 
 
-base_path = os.path.dirname(__file__)  # pega o diretório do app.py    
-with open(os.path.join(base_path, 'urls.json'), 'r') as f:
-    arquivo = json.load(f)
-            
 
- # --- Inicializar Selenium ---
-options = webdriver.ChromeOptions()
-# options.add_argument("--headless")  # se quiser rodar sem mostrar navegador
-navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-navegador.maximize_window()
-wait = WebDriverWait(navegador, 10)        
-            
-if submit:
-    st.success("Abrindo página e tentando login automático...")
-    
-    
-    # localicar o caminho do .env para preenchimento dos dados necessários para a configuração
+# localicar o caminho do .env para preenchimento dos dados necessários para a configuração
     load_dotenv(dotenv_path="./load_dotenv(dotenv_path=./configurar_noticias/dados_formulario.env")
 
     # valores das variáveis
@@ -50,21 +35,44 @@ if submit:
     DATA_FIM = os.getenv("DATA_FIM")
 
 
-    # --- Carregar URLs do JSON ---
-    data = json.load(arquivo)
-    urls = data.get("urls", [])
-    st.write(f"{len(urls)} URLs encontradas:")
+
+# --- Caminho do JSON ---
+base_path = os.path.dirname(__file__)  # diretório do app.py
+json_path = os.path.join(base_path, 'urls.json')
+            
+
+ # --- Inicializar Selenium ---
+options = webdriver.ChromeOptions()
+# options.add_argument("--headless")  # se quiser rodar sem mostrar navegador
+options.binary_location = "/usr/bin/chromium-browser"
+navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+navegador.maximize_window()
+wait = WebDriverWait(navegador, 10)  
+            
+if submit:
+    st.success("Abrindo página e tentando login automático...")
     
-    
-    for u in urls:
-        st.write(u)
-     
     #abrir o navegador  
     #navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()))         
     #wait = WebDriverWait(navegador, 10)  # ⬅️ cria o "esperador"
 
     # colocar o navegador em tela cheia
     #navegador.maximize_window()
+    
+    # --- Carregar URLs do JSON ---
+    try:
+        with open(json_path, 'r') as f:
+            data = json.load(f)
+        urls = data.get("urls", [])
+    except FileNotFoundError:
+        st.error(f"Não encontrei o arquivo urls.json em {json_path}")
+        urls = []
+        
+        
+    st.write(f"{len(urls)} URLs encontradas:")
+    for u in urls:
+        st.write(u)
+
 
     primeira = True
     for url in urls:
@@ -89,20 +97,20 @@ if submit:
 
 
         try:  # assumindo que o JSON tem algo como {"logins": ["url1", "url2"]}
-            print(f"Abrindo {url} ...")
-            navegador.get(url)
+           # print(f"Abrindo {url} ...")
+           # navegador.get(url)
 
 
             # Ajusta o seletor para algo que aparece quando a página tá pronta
-            elemento = wait.until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
-            print(f"Página carregada em {url}!")
+           # elemento = wait.until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
+           # print(f"Página carregada em {url}!")
 
             # selecionar um elemento na tela
             entrar = navegador.find_element(By.CLASS_NAME, "arrow-wrapper")
             # escrever em um campo formulário
             navegador.find_element(By.NAME ,"username").send_keys(usuario)
             navegador.find_element(By.ID,"senha").send_keys(senha)
-            # clicar em um elemento
+            # clicar em um elemento 
             entrar.click()
             st.success(f"Login automático feito em {url}! 🚀")
             # espera até 10 segundos para os elementos aparecerem
