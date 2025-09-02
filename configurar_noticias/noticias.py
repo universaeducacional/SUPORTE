@@ -12,6 +12,7 @@ import os
 import time
 import json
 import streamlit as st
+import undetected_chromedriver as uc
 import subprocess
 import requests
 
@@ -53,15 +54,12 @@ if submit:
     st.success("Abrindo página e tentando login automático...")
     
     if "navegador" not in st.session_state:
-        options = Options()
-        options.add_argument("--headless")
+        options = uc.ChromeOptions()
+        options.headless = True  # roda sem abrir janela
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
-    
-        st.session_state.navegador = webdriver.Chrome(
-            service=Service(ChromeDriverManager().install()),
-            options=options
-        )
+
+        st.session_state.navegador = uc.Chrome(options=options)
         st.session_state.wait = WebDriverWait(st.session_state.navegador, 10)
 
     navegador = st.session_state.navegador
