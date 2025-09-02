@@ -41,20 +41,12 @@ DATA_FIM = os.getenv("DATA_FIM")
 base_path = os.path.dirname(__file__)  # diretório do app.py
 json_path = os.path.join(base_path, 'urls.json')
             
-
- # --- Inicializar Selenium ---
-#options = webdriver.ChromeOptions()
-## options.add_argument("--headless")  # se quiser rodar sem mostrar navegador
-#options.binary_location = "/usr/bin/chromium-browser"
-#navegador = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-#navegador.maximize_window()
-#wait = WebDriverWait(navegador, 10)  
             
 if submit:
     st.success("Abrindo página e tentando login automático...")
     
     if "navegador" not in st.session_state:
-        navegador = uc.Chrome(headless=True)  # não passa opções vazias
+        navegador = uc.Chrome(version_main=114, headless=True)
         st.session_state.navegador = navegador
     
     
