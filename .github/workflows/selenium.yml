@@ -20,13 +20,6 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Instalar Chrome e Chromedriver
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser chromium-chromedriver
-          which chromedriver
-          chromedriver --version
-
       - name: Subir Streamlit em background
         run: |
           nohup streamlit run app.py --server.port 8501 > streamlit.log 2>&1 &
@@ -48,14 +41,13 @@ jobs:
           pytest tests/ -v || echo "Nenhum teste encontrado, continuando..."
 
 
-      - name: Instalar Chromium e dependências
+      - name: Instalar Chromium e Chromedriver
         run: |
           sudo apt-get update
-          sudo apt-get install -y chromium-browser chromium-chromedriver \
-              libnss3 libgconf-2-4 libxss1 libappindicator1 libindicator7
-          which chromium-browser
+          sudo apt-get install -y chromium-browser chromium-driver
+          which chromium-browser || which chromium
           which chromedriver
-          chromium-browser --version
+          chromium-browser --version || chromium --version
           chromedriver --version
 
 
