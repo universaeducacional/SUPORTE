@@ -4,3 +4,4 @@ webdriver-manager
 python-dotenv
 requests
 undetected-chromedriver
+setuptools
