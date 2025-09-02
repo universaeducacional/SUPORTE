@@ -53,14 +53,15 @@ if submit:
     st.success("Abrindo página e tentando login automático...")
     
     if "navegador" not in st.session_state:
-        options = webdriver.ChromeOptions()
-        # options.add_argument("--headless")  # descomente se não quiser abrir a janela
-        options.binary_location = "/usr/bin/chromium-browser"  # necessário no Linux
+        options = Options()
+        options.add_argument("--headless")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+    
         st.session_state.navegador = webdriver.Chrome(
-            service=Service("/usr/bin/chromedriver"), 
+            service=Service(ChromeDriverManager().install()),
             options=options
         )
-        st.session_state.navegador.maximize_window()
         st.session_state.wait = WebDriverWait(st.session_state.navegador, 10)
 
     navegador = st.session_state.navegador
