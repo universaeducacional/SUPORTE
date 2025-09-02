@@ -54,10 +54,10 @@ if submit:
     st.success("Abrindo página e tentando login automático...")
     
     if "navegador" not in st.session_state:
-        navegador = uc.Chrome(
-        options=uc.ChromeOptions(),  # só opções
-        headless=True
-    )
+        navegador = uc.Chrome(headless=True)  # não passa opções vazias
+        st.session_state.navegador = navegador
+    
+    
     st.session_state.navegador = navegador
     st.session_state.wait = WebDriverWait(navegador, 10)
 
