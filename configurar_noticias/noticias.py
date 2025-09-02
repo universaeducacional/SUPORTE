@@ -27,13 +27,13 @@ with st.form("login_form"):
 
 
 # localicar o caminho do .env para preenchimento dos dados necessários para a configuração
-    load_dotenv(dotenv_path="./load_dotenv(dotenv_path=./configurar_noticias/dados_formulario.env")
+load_dotenv(dotenv_path="./load_dotenv(dotenv_path=./configurar_noticias/dados_formulario.env")
 
-    # valores das variáveis
-    TITULO = os.getenv("TITULO") 
-    HTML = os.getenv("HTML")
-    DATA_INICIO = os.getenv("DATA_INICIO")
-    DATA_FIM = os.getenv("DATA_FIM")
+# valores das variáveis
+TITULO = os.getenv("TITULO") 
+HTML = os.getenv("HTML")
+DATA_INICIO = os.getenv("DATA_INICIO")
+DATA_FIM = os.getenv("DATA_FIM")
 
 
 
@@ -54,13 +54,12 @@ if submit:
     st.success("Abrindo página e tentando login automático...")
     
     if "navegador" not in st.session_state:
-        options = uc.ChromeOptions()
-        options.headless = True  # roda sem abrir janela
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-
-        st.session_state.navegador = uc.Chrome(options=options)
-        st.session_state.wait = WebDriverWait(st.session_state.navegador, 10)
+        navegador = uc.Chrome(
+        options=uc.ChromeOptions(),  # só opções
+        headless=True
+    )
+    st.session_state.navegador = navegador
+    st.session_state.wait = WebDriverWait(navegador, 10)
 
     navegador = st.session_state.navegador
     wait = st.session_state.wait
