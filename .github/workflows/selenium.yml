@@ -59,4 +59,9 @@ jobs:
           chromium-browser --version
           chromedriver --version
 
+      - name: Descobrir paths
+        run: |
+          which chromium || true
+          which chromium-browser || true
+          which chromedriver || true
 
