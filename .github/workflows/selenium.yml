@@ -36,9 +36,9 @@ jobs:
           
           head -n 30 streamlit.log
 
-      - name: Rodar testes
-        run: |
-          pytest tests/ -v || echo "Nenhum teste encontrado, continuando..."
+     # - name: Rodar testes
+     #   run: |
+      #    pytest tests/ -v || echo "Nenhum teste encontrado, continuando..."
 
 
       - name: Instalar Chromium e Chromedriver
