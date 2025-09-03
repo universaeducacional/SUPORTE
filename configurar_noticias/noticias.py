@@ -62,11 +62,11 @@ if submit:
     options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-
     options.binary_location = "/usr/bin/chromium"
     
-    driver = webdriver.Chrome(
-        service=Service("/usr/bin/chromedriver"),  # driver já instalado no Cloud
+    # força o uc a usar a versão exata do Chromium no container
+    navegador = uc.Chrome(
+        version_main=120,  # versão do Chromium do Streamlit Cloud
         options=options
     )
     
