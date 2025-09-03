@@ -20,15 +20,6 @@ from PIL import Image
 import subprocess
 
 
-
-st.text("Verificando caminhos do Chromium e do Chromedriver...")
-
-st.write("chromium:", subprocess.getoutput("which chromium"))
-st.write("chromium-browser:", subprocess.getoutput("which chromium-browser"))
-st.write("chromedriver:", subprocess.getoutput("which chromedriver"))
-
-
-
 st.title("Portal de acesso automático")
 
 with st.form("login_form"):
@@ -100,7 +91,7 @@ if submit:
         # Screenshot
         screenshot = navegador.get_screenshot_as_png()
         image = Image.open(io.BytesIO(screenshot))
-        st.image(image, caption=f"Screenshot de {url}", width=True)
+        st.image(image, caption=f"Screenshot de {url}", use_container_width=True)
         st.write("Título:", navegador.title)
 
     
