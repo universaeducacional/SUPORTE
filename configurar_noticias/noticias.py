@@ -16,6 +16,13 @@ import streamlit as st
 import subprocess
 import requests
 from PIL import Image
+import subprocess
+
+
+
+print(subprocess.getoutput("which chromium-browser"))
+print(subprocess.getoutput("which chromium"))
+
 
 
 st.title("Portal de acesso automático")
