@@ -4,3 +4,4 @@ undetected-chromedriver
 python-dotenv
 pillow
 requests
+setuptools
