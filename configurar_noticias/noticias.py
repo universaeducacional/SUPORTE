@@ -118,8 +118,7 @@ if submit:
             # Preenche o formulário e clica no botão
             usuario_input.send_keys(usuario)
             senha_input.send_keys(senha)
-            for el in entrar_btn:
-                el.click()
+            entrar_btn.click()
             time.sleep(2)  # garante que a próxima ação tenha elementos carregados
             
             st.write("urls:", urls)
