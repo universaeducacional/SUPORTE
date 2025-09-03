@@ -55,7 +55,7 @@ if submit:
     options.binary_location = "/usr/bin/chromium-browser"
     
     navegador = uc.Chrome(options=options)
-   # wait = WebDriverWait(navegador, 10)
+    wait = WebDriverWait(navegador, 10)
 
     # Carrega URLs do JSON
     try:
