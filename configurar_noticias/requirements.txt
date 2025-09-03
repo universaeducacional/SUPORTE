@@ -1,5 +1,0 @@
-streamlit
-selenium
-python-dotenv
-requests
-pillow
