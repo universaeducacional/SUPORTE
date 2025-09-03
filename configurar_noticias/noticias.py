@@ -118,7 +118,7 @@ if submit:
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
             # clicar na barra de pesquisar menu
-            pesquisar = EC.presence_of_element_located(By.ID,"pesMenu")
+            pesquisar = EC.presence_of_element_located((By.ID,"pesMenu"))
             pesquisar.send_keys("Gerenciamento de Notícias")
             opcao = WebDriverWait(navegador, 2).until(
                 EC.element_to_be_clickable((By.XPATH,
@@ -128,7 +128,7 @@ if submit:
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
             # clicar em adicionar nova noticia
-            adicionar = EC.presence_of_element_located(By.ID,"btn-sis-gerenciamento-noticias-add")
+            adicionar = EC.presence_of_element_located((By.ID,"btn-sis-gerenciamento-noticias-add"))
             adicionar.click()
             # adicionar título
             titulo = WebDriverWait(navegador, 2).until(
@@ -195,7 +195,7 @@ if submit:
                 campo.send_keys(valor)
                 # clique fora para perder foco e fechar pop-up
                 try:
-                    elemento_fora = EC.presence_of_element_located(By.TAG_NAME, "body")
+                    elemento_fora = EC.presence_of_element_located((By.TAG_NAME, "body"))
                     ActionChains(navegador).move_to_element(elemento_fora).click().perform()
                 except Exception as e:
                     print("⚠️ Erro ao clicar fora (ignorado):", e)
@@ -220,7 +220,7 @@ if submit:
             select.click()
             # achar o campo grupos
             seletor = EC.presence_of_element_located(
-                By.ID,"s2id_grupos"
+                (By.ID,"s2id_grupos")
             )
             seletor.click()
             # entra na div que esta o campo de grupos
@@ -229,7 +229,7 @@ if submit:
             )
             # delimita quais campos e a sequência que existe dentro da div
             search_input = camp.presence_of_element_located(
-                By.CSS_SELECTOR,"ul li input"
+                (By.CSS_SELECTOR,"ul li input")
             )
             #digita o valor da busca
             search_input.send_keys("admin")
@@ -241,7 +241,7 @@ if submit:
             item.click()
             # seleciona o botão salvar
             salvar = EC.presence_of_element_located(
-                By.ID, "salvar-gerenciamento-noticia"
+                (By.ID, "salvar-gerenciamento-noticia")
             )
             salvar.click()
             # espera até 3 segundos para os elementos aparecerem
