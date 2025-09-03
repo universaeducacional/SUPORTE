@@ -156,6 +156,7 @@ if submit:
             # clicar em adicionar nova noticia
             adicionar = wait.until(EC.presence_of_element_located((By.ID,"btn-sis-gerenciamento-noticias-add")))
             adicionar.click()
+            st.text("Erro 3")
             # adicionar título
             titulo = WebDriverWait(navegador, 2).until(
                 EC.element_to_be_clickable((By.ID,"titulo"))
