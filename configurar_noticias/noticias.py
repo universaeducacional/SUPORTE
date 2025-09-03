@@ -121,12 +121,12 @@ if submit:
             entrar_btn.click()
             time.sleep(2)  # garante que a próxima ação tenha elementos carregados
             
-            st.write("urls:", urls)
-            st.write("data do JSON:", data)
+           # st.write("urls:", urls)
+            #st.write("data do JSON:", data)
 
             # Exibe os valores corretos
-            st.text(f"Usuário usado: {usuario}")
-            st.text(f"Senha usada: {senha}")
+            #st.text(f"Usuário usado: {usuario}")
+            #st.text(f"Senha usada: {senha}")
 
             # Salva no session_state
             st.session_state["usuario"] = usuario
@@ -140,7 +140,7 @@ if submit:
             time.sleep(2)
             
             
-            st.text("Erro")
+            st.text("Erro 1")
             
             # clicar na barra de pesquisar menu
             pesquisar = wait.until(EC.presence_of_element_located((By.ID,"pesMenu")))
@@ -150,6 +150,7 @@ if submit:
                     "//li[normalize-space(.)='Gerenciamento de Notícias']"))
             )
             opcao.click()
+            st.text("Erro 2")
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
             # clicar em adicionar nova noticia
