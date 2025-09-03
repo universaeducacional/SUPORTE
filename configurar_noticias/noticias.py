@@ -111,6 +111,7 @@ if submit:
             usuario_input.send_keys(usuario)
             senha_input.send_keys(senha)
             entrar_btn.click()
+            time.sleep(2)  # garante que a próxima ação tenha elementos carregados
 
             st.success(f"Login automático feito em {url}! 🚀")
             
