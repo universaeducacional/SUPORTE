@@ -114,10 +114,6 @@ if submit:
             senha_input = wait.until(EC.element_to_be_clickable((By.ID, "senha")))
             entrar_btn = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "arrow-wrapper")))
 
-            st.write("urls:", urls)
-            st.write("data do JSON:", data)
-            
-            
             
             # Preenche o formulário e clica no botão
             usuario_input.send_keys(usuario)
@@ -129,8 +125,8 @@ if submit:
             st.write("urls:", urls)
             st.write("data do JSON:", data)
 
-            st.write("usuario:", usuario_input)
-            st.write("senha:", senha_input)
+            st.text_input("usuario:", usuario_input)
+            st.text_input("senha:", senha_input)
             
             st.success(f"Login automático feito em {url}! 🚀")
             
