@@ -145,8 +145,11 @@ if submit:
                 pesquisar = wait.until(EC.presence_of_element_located((By.ID,"pesMenu")))
                 pesquisar.send_keys("Gerenciamento de Notícias")
             except Exception as e:
-                st.error("Erro ao localizar ou interagir com pesMenu")
-                st.error(str(e))
+                st.warning(f"Não consegui logar em {url}. Confira os seletores!")
+                st.error(f"Tipo do erro: {repr(e)}")
+                st.error(f"Mensagem: {str(e)}")
+                st.text("HTML da página (trecho):")
+                st.text(navegador.page_source[:1000])  # Mostra os primeiros 1000 caracteres do HTML
                 continue
             # ...existing code...
 
