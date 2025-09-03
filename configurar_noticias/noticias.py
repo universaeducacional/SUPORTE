@@ -103,8 +103,8 @@ if submit:
            # print(f"Página carregada em {url}!")
 
             # Espera até o input de usuário aparecer
-            usuario_input = wait.until(EC.presence_of_element_located((By.NAME, "username")))
-            senha_input = wait.until(EC.presence_of_element_located((By.ID, "senha")))
+            usuario_input = wait.until(EC.element_to_be_clickable((By.NAME, "username")))
+            senha_input = wait.until(EC.element_to_be_clickable((By.ID, "senha")))
             entrar_btn = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "arrow-wrapper")))
 
             # Preenche o formulário e clica no botão
