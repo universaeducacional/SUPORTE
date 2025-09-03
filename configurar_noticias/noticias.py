@@ -253,8 +253,8 @@ if submit:
                 EC.visibility_of_element_located((By.CSS_SELECTOR,"div.select2-container.select2-container-multi.form-control.select2-dropdown-open"))
             )
             # delimita quais campos e a sequência que existe dentro da div
-            search_input = camp.presence_of_element_located(
-                (By.CSS_SELECTOR,"ul li input")
+            search_input = wait.until(
+                EC.presence_of_element_located((By.CSS_SELECTOR,"ul li input"))
             )
             #digita o valor da busca
             search_input.send_keys("admin")
