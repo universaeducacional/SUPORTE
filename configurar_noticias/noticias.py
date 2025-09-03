@@ -20,8 +20,9 @@ import subprocess
 
 
 
-print(subprocess.getoutput("which chromium-browser"))
-print(subprocess.getoutput("which chromium"))
+print("chromium:", subprocess.getoutput("which chromium"))
+print("chromium-browser:", subprocess.getoutput("which chromium-browser"))
+print("chromedriver:", subprocess.getoutput("which chromedriver"))
 
 
 
