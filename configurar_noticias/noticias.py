@@ -203,14 +203,14 @@ if submit:
             preencher_data_com_foco("dataInicio", DATA_INICIO)
             preencher_data_com_foco("dataFim",  DATA_FIM)
             # adicionar prioridade
-            prioridade = wait.until(EC.presence_of_element_located()
-                By.ID, "prioridade"
+            prioridade = wait.until(EC.presence_of_element_located
+                (By.ID, "prioridade")
             )
             prioridade.send_keys("1")
             # abrir seleção de status
-            selecao = wait.until(EC.presence_of_element_located()
-                By.ID,
-                "s2id_status"
+            selecao = wait.until(EC.presence_of_element_located(
+                (By.ID,
+                "s2id_status"))
             )
             selecao.click()
             # clicar na situação
@@ -219,8 +219,8 @@ if submit:
             )
             select.click()
             # achar o campo grupos
-            seletor = wait.until(EC.presence_of_element_located()
-                (By.ID,"s2id_grupos")
+            seletor = wait.until(EC.presence_of_element_located(
+                (By.ID,"s2id_grupos"))
             )
             seletor.click()
             # entra na div que esta o campo de grupos
@@ -240,8 +240,8 @@ if submit:
             )))
             item.click()
             # seleciona o botão salvar
-            salvar = wait.until(EC.presence_of_element_located()
-                (By.ID, "salvar-gerenciamento-noticia")
+            salvar = wait.until(EC.presence_of_element_located(
+                (By.ID, "salvar-gerenciamento-noticia"))
             )
             salvar.click()
             # espera até 3 segundos para os elementos aparecerem
