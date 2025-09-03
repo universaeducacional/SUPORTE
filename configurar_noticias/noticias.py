@@ -115,19 +115,20 @@ if submit:
             usuario_input = wait.until(EC.presence_of_element_located((By.NAME, "username")))
             senha_input = wait.until(EC.presence_of_element_located((By.ID, "senha")))
             entrar_btn = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "arrow-wrapper")))
-        
+
             # Preenche o formulário e clica no botão
             usuario_input.send_keys(usuario)
             senha_input.send_keys(senha)
             entrar_btn.click()
-            
+
             st.success(f"Login automático feito em {url}! 🚀")
             
             st.success(f"Login automático feito em {url}! 🚀")
+            
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
             # clicar na barra de pesquisar menu
-            pesquisar = navegador.find_element(By.ID,"pesMenu")
+            pesquisar = navegador.presence_of_element_located(By.ID,"pesMenu")
             pesquisar.send_keys("Gerenciamento de Notícias")
             opcao = WebDriverWait(navegador, 2).until(
                 EC.element_to_be_clickable((By.XPATH,
@@ -137,7 +138,7 @@ if submit:
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
             # clicar em adicionar nova noticia
-            adicionar = navegador.find_element(By.ID,"btn-sis-gerenciamento-noticias-add")
+            adicionar = navegador.presence_of_element_located(By.ID,"btn-sis-gerenciamento-noticias-add")
             adicionar.click()
             # adicionar título
             titulo = WebDriverWait(navegador, 2).until(
@@ -152,7 +153,7 @@ if submit:
                 )
             )
             # localiza o botão desejado
-            botao_codeview = container.find_element(
+            botao_codeview = container.presence_of_element_located(
                 By.CSS_SELECTOR,
                 "button.note-btn.btn.btn-default.btn-sm.btn-codeview"
             )
@@ -168,7 +169,7 @@ if submit:
                 )
             )
             #acha a textarea.note-codable
-            codable = area.find_element(
+            codable = area.presence_of_element_located(
                 By.CSS_SELECTOR, "textarea.note-codable"
             )
             html_content = HTML
@@ -190,7 +191,7 @@ if submit:
                 )
             )
             # localiza o botão desejado
-            botao_codeview = container.find_element(
+            botao_codeview = container.presence_of_element_located(
                 By.CSS_SELECTOR,
                 "button.note-btn.btn.btn-default.btn-sm.btn-codeview"
             )
@@ -204,7 +205,7 @@ if submit:
                 campo.send_keys(valor)
                 # clique fora para perder foco e fechar pop-up
                 try:
-                    elemento_fora = navegador.find_element(By.TAG_NAME, "body")
+                    elemento_fora = navegador.presence_of_element_located(By.TAG_NAME, "body")
                     ActionChains(navegador).move_to_element(elemento_fora).click().perform()
                 except Exception as e:
                     print("⚠️ Erro ao clicar fora (ignorado):", e)
@@ -212,12 +213,12 @@ if submit:
             preencher_data_com_foco("dataInicio", DATA_INICIO)
             preencher_data_com_foco("dataFim",  DATA_FIM)
             # adicionar prioridade
-            prioridade = navegador.find_element(
+            prioridade = navegador.presence_of_element_located(
                 By.ID, "prioridade"
             )
             prioridade.send_keys("1")
             # abrir seleção de status
-            selecao = navegador.find_element(
+            selecao = navegador.presence_of_element_located(
                 By.ID,
                 "s2id_status"
             )
@@ -228,7 +229,7 @@ if submit:
             )
             select.click()
             # achar o campo grupos
-            seletor = navegador.find_element(
+            seletor = navegador.presence_of_element_located(
                 By.ID,"s2id_grupos"
             )
             seletor.click()
@@ -237,7 +238,7 @@ if submit:
                 EC.visibility_of_element_located((By.CSS_SELECTOR,"div.select2-container.select2-container-multi.form-control.select2-dropdown-open"))
             )
             # delimita quais campos e a sequência que existe dentro da div
-            search_input = camp.find_element(
+            search_input = camp.presence_of_element_located(
                 By.CSS_SELECTOR,"ul li input"
             )
             #digita o valor da busca
@@ -249,7 +250,7 @@ if submit:
             )))
             item.click()
             # seleciona o botão salvar
-            salvar = navegador.find_element(
+            salvar = navegador.presence_of_element_located(
                 By.ID, "salvar-gerenciamento-noticia"
             )
             salvar.click()
