@@ -21,9 +21,11 @@ import subprocess
 
 
 
-print("chromium:", subprocess.getoutput("which chromium"))
-print("chromium-browser:", subprocess.getoutput("which chromium-browser"))
-print("chromedriver:", subprocess.getoutput("which chromedriver"))
+st.text("Verificando caminhos do Chromium e do Chromedriver...")
+
+st.write("chromium:", subprocess.getoutput("which chromium"))
+st.write("chromium-browser:", subprocess.getoutput("which chromium-browser"))
+st.write("chromedriver:", subprocess.getoutput("which chromedriver"))
 
 
 
