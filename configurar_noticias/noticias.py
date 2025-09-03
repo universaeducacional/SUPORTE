@@ -70,7 +70,7 @@ if submit:
         options=options
     )
     
-    navegador = uc.Chrome(options=options)
+   # navegador = uc.Chrome(options=options)
     wait = WebDriverWait(navegador, 10)
 
     # Carrega URLs do JSON
