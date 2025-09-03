@@ -15,6 +15,7 @@ import streamlit as st
 import undetected_chromedriver as uc
 import subprocess
 import requests
+from PIL import Image
 
 
 st.title("Portal de acesso automático")
@@ -43,16 +44,16 @@ json_path = os.path.join(base_path, 'urls.json')
             
             
 if submit:
-    st.success("Abrindo páginas no navegador com Selenium...")
+    st.success("Rodando Selenium headless no servidor...")
 
-    # Inicializa Selenium apenas uma vez
-    if "navegador" not in st.session_state:
-        navegador = uc.Chrome(version_main=114, headless=False)  # headless=True se quiser invisível
-        st.session_state.navegador = navegador
-        st.session_state.wait = WebDriverWait(navegador, 10)
-    else:
-        navegador = st.session_state.navegador
-        wait = st.session_state.wait
+    # Inicializa Selenium headless
+    options = uc.ChromeOptions()
+    options.add_argument("--headless=new")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+
+    navegador = uc.Chrome(options=options)
+    wait = WebDriverWait(navegador, 10)
 
     # Carrega URLs do JSON
     try:
@@ -64,39 +65,32 @@ if submit:
         urls = []
 
     st.write(f"{len(urls)} URLs encontradas:")
-    for u in urls:
-        st.write(u)
 
-    # Abre as URLs em abas separadas
-    primeira = True
     for url in urls:
-        if primeira:
-            navegador.get(url)
-            primeira = False
-        else:
-            navegador.execute_script(f"window.open('{url}');")
-            navegador.switch_to.window(navegador.window_handles[-1])
+        st.write(f"🔗 {url}")
+        navegador.get(url)
 
-        # Espera a página carregar
-        wait.until(lambda d: d.execute_script("return document.readyState") == "complete")
-        time.sleep(1)  # opcional
+        # Espera body carregar
+        try:
+            wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+        except:
+            st.warning(f"Timeout ao carregar {url}")
+            continue
+
+        time.sleep(1)
+
+        # Screenshot
+        screenshot = navegador.get_screenshot_as_png()
+        image = Image.open(io.BytesIO(screenshot))
+        st.image(image, caption=f"Screenshot de {url}", use_container_width=True)
+        st.write("Título:", navegador.title)
 
     
-       # usuario = st.session_state["usuario"]
-       # senha = st.session_state["senha"]
-
-       # time.sleep(20)
-
-       # st.write("Executando processo com Selenium...")
-
-
-        try:  # assumindo que o JSON tem algo como {"logins": ["url1", "url2"]}
-           # print(f"Abrindo {url} ...")
-           # navegador.get(url)
+        try: 
 
 
             # Ajusta o seletor para algo que aparece quando a página tá pronta
-            elemento = wait.until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
+           # elemento = wait.until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
            # print(f"Página carregada em {url}!")
 
             # selecionar um elemento na tela
