@@ -111,13 +111,18 @@ if submit:
            # elemento = wait.until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
            # print(f"Página carregada em {url}!")
 
-            # selecionar um elemento na tela
-            entrar = navegador.find_element(By.CLASS_NAME, "arrow-wrapper")
-            # escrever em um campo formulário
-            navegador.find_element(By.NAME ,"username").send_keys(usuario)
-            navegador.find_element(By.ID,"senha").send_keys(senha)
-            # clicar em um elemento 
-            entrar.click()
+            # Espera até o input de usuário aparecer
+            usuario_input = wait.until(EC.presence_of_element_located((By.NAME, "username")))
+            senha_input = wait.until(EC.presence_of_element_located((By.ID, "senha")))
+            entrar_btn = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "arrow-wrapper")))
+        
+            # Preenche o formulário e clica no botão
+            usuario_input.send_keys(usuario)
+            senha_input.send_keys(senha)
+            entrar_btn.click()
+            
+            st.success(f"Login automático feito em {url}! 🚀")
+            
             st.success(f"Login automático feito em {url}! 🚀")
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
