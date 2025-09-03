@@ -65,6 +65,11 @@ if submit:
 
     options.binary_location = "/usr/bin/chromium"
     
+    driver = webdriver.Chrome(
+        service=Service("/usr/bin/chromedriver"),  # driver já instalado no Cloud
+        options=options
+    )
+    
     navegador = uc.Chrome(options=options)
     wait = WebDriverWait(navegador, 10)
 
