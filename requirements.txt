@@ -3,5 +3,7 @@ selenium
 webdriver-manager
 python-dotenv
 requests
-undetected-chromedriver
-setuptools
+mysql-connector-python
+sqlalchemy
+pymysql
+pandas
