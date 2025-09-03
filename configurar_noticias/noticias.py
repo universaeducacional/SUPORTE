@@ -59,7 +59,7 @@ if submit:
 
     # Inicializa Selenium headless
     options = uc.ChromeOptions()
-    options.add_argument("--headless=new")
+    options.add_argument("--headless=chrome")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.binary_location = "/usr/bin/chromium"
