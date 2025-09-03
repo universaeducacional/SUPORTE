@@ -124,8 +124,14 @@ if submit:
             st.write("urls:", urls)
             st.write("data do JSON:", data)
 
-            st.text_input("usuario:", usuario_input)
-            st.text_input("senha:", senha_input)
+            # Exibe os valores corretos
+            st.text(f"Usuário usado: {usuario}")
+            st.text(f"Senha usada: {senha}")
+            
+            # Salva no session_state
+            st.session_state["usuario"] = usuario
+            st.session_state["senha"] = senha
+            # ...existing code...
             
             st.success(f"Login automático feito em {url}! 🚀")
             
