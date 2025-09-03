@@ -117,8 +117,7 @@ if submit:
             st.write("urls:", urls)
             st.write("data do JSON:", data)
             
-            st.write("usuario:", usuario_input)
-            st.write("senha:", senha_input)
+            
             
             # Preenche o formulário e clica no botão
             usuario_input.send_keys(usuario)
@@ -130,6 +129,9 @@ if submit:
             st.write("urls:", urls)
             st.write("data do JSON:", data)
 
+            st.write("usuario:", usuario_input)
+            st.write("senha:", senha_input)
+            
             st.success(f"Login automático feito em {url}! 🚀")
             
             
