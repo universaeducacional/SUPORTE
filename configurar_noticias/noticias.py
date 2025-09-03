@@ -100,7 +100,7 @@ if submit:
         # Screenshot
         screenshot = navegador.get_screenshot_as_png()
         image = Image.open(io.BytesIO(screenshot))
-        st.image(image, caption=f"Screenshot de {url}", use_container_width=True)
+        st.image(image, caption=f"Screenshot de {url}", width=True)
         st.write("Título:", navegador.title)
 
     
@@ -123,12 +123,11 @@ if submit:
 
             st.success(f"Login automático feito em {url}! 🚀")
             
-            st.success(f"Login automático feito em {url}! 🚀")
             
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
             # clicar na barra de pesquisar menu
-            pesquisar = navegador.presence_of_element_located(By.ID,"pesMenu")
+            pesquisar = EC.presence_of_element_located(By.ID,"pesMenu")
             pesquisar.send_keys("Gerenciamento de Notícias")
             opcao = WebDriverWait(navegador, 2).until(
                 EC.element_to_be_clickable((By.XPATH,
@@ -138,7 +137,7 @@ if submit:
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
             # clicar em adicionar nova noticia
-            adicionar = navegador.presence_of_element_located(By.ID,"btn-sis-gerenciamento-noticias-add")
+            adicionar = EC.presence_of_element_located(By.ID,"btn-sis-gerenciamento-noticias-add")
             adicionar.click()
             # adicionar título
             titulo = WebDriverWait(navegador, 2).until(
@@ -205,7 +204,7 @@ if submit:
                 campo.send_keys(valor)
                 # clique fora para perder foco e fechar pop-up
                 try:
-                    elemento_fora = navegador.presence_of_element_located(By.TAG_NAME, "body")
+                    elemento_fora = EC.presence_of_element_located(By.TAG_NAME, "body")
                     ActionChains(navegador).move_to_element(elemento_fora).click().perform()
                 except Exception as e:
                     print("⚠️ Erro ao clicar fora (ignorado):", e)
@@ -213,12 +212,12 @@ if submit:
             preencher_data_com_foco("dataInicio", DATA_INICIO)
             preencher_data_com_foco("dataFim",  DATA_FIM)
             # adicionar prioridade
-            prioridade = navegador.presence_of_element_located(
+            prioridade = EC.presence_of_element_located(
                 By.ID, "prioridade"
             )
             prioridade.send_keys("1")
             # abrir seleção de status
-            selecao = navegador.presence_of_element_located(
+            selecao = EC.presence_of_element_located(
                 By.ID,
                 "s2id_status"
             )
@@ -229,7 +228,7 @@ if submit:
             )
             select.click()
             # achar o campo grupos
-            seletor = navegador.presence_of_element_located(
+            seletor = EC.presence_of_element_located(
                 By.ID,"s2id_grupos"
             )
             seletor.click()
@@ -250,7 +249,7 @@ if submit:
             )))
             item.click()
             # seleciona o botão salvar
-            salvar = navegador.presence_of_element_located(
+            salvar = EC.presence_of_element_located(
                 By.ID, "salvar-gerenciamento-noticia"
             )
             salvar.click()
