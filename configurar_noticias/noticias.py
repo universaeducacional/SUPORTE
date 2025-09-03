@@ -68,9 +68,16 @@ if submit:
     try:
         with open(json_path, 'r') as f:
             data = json.load(f)
-        urls = data.get("urls", [])
+        if not isinstance(data, dict):
+            st.error("Arquivo JSON inválido!")
+            urls = []
+        else:
+            urls = data.get("urls", [])
     except FileNotFoundError:
         st.error(f"Não encontrei o arquivo urls.json em {json_path}")
+        urls = []
+    except json.JSONDecodeError:
+        st.error("Erro ao ler o JSON!")
         urls = []
 
     st.write(f"{len(urls)} URLs encontradas:")
