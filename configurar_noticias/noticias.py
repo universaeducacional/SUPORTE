@@ -141,7 +141,15 @@ if submit:
             
             
             st.text("Erro 1")
-            
+            try:
+                pesquisar = wait.until(EC.presence_of_element_located((By.ID,"pesMenu")))
+                pesquisar.send_keys("Gerenciamento de Notícias")
+            except Exception as e:
+                st.error("Erro ao localizar ou interagir com pesMenu")
+                st.error(str(e))
+                continue
+            # ...existing code...
+
             # clicar na barra de pesquisar menu
             pesquisar = wait.until(EC.presence_of_element_located((By.ID,"pesMenu")))
             pesquisar.send_keys("Gerenciamento de Notícias")
