@@ -127,7 +127,7 @@ if submit:
             # Exibe os valores corretos
             st.text(f"Usuário usado: {usuario}")
             st.text(f"Senha usada: {senha}")
-            
+
             # Salva no session_state
             st.session_state["usuario"] = usuario
             st.session_state["senha"] = senha
@@ -138,6 +138,10 @@ if submit:
             
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
+            
+            
+            st.text("Erro")
+            
             # clicar na barra de pesquisar menu
             pesquisar = wait.until(EC.presence_of_element_located((By.ID,"pesMenu")))
             pesquisar.send_keys("Gerenciamento de Notícias")
