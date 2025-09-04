@@ -189,9 +189,14 @@ if submit:
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
             
-            # clicar em adicionar nova noticia
-            adicionar = wait.until(EC.presence_of_element_located((By.ID,"btn-sis-gerenciamento-noticias-add")))
-            adicionar.click()
+            # Espera até o botão estar clicável
+            adicionar = wait.until(EC.element_to_be_clickable((By.ID, "btn-sis-gerenciamento-noticias-add")))
+            
+            if adicionar is None:
+                st.error("Botão 'Adicionar' não encontrado!")
+            else:
+                st.success("Botão 'Adicionar' encontrado e pronto para clique.")
+                adicionar.click()
             
             st.text("HTML do menu encontrado:")
             st.text(adicionar.get_attribute("outerHTML"))
