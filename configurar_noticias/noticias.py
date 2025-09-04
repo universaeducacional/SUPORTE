@@ -152,6 +152,7 @@ if submit:
                 st.write("Título após pesquisa:", navegador.title)
                 # ...existing code...
             except Exception as e:
+                st.warning(f"ERROOOO")
                 st.warning(f"Não consegui logar em {url}. Confira os seletores!")
                 st.error(f"Tipo do erro: {repr(e)}")
                 st.error(f"Mensagem: {str(e)}")
