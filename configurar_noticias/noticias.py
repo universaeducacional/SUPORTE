@@ -220,6 +220,39 @@ if submit:
             titulo.clear()
             titulo.send_keys(TITULO)
             st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
+            
+            # Ativa modo código do editor
+            botao_codeview = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
+            botao_codeview.click()
+            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após ativar codeview")
+            
+            # Preenche conteúdo HTML
+            codable = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "textarea.note-codable")))
+            navegador.execute_script("arguments[0].value = arguments[1];", codable, HTML)
+            navegador.execute_script("arguments[0].dispatchEvent(new Event('input', {bubbles:true}));", codable)
+            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher conteúdo")
+            
+            # Preenche datas
+            data_inicio = wait.until(EC.element_to_be_clickable((By.ID, "dataInicio")))
+            data_inicio.clear()
+            data_inicio.send_keys(DATA_INICIO)
+            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data início")
+            
+            data_fim = wait.until(EC.element_to_be_clickable((By.ID, "dataFim")))
+            data_fim.clear()
+            data_fim.send_keys(DATA_FIM)
+            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data fim")
+            
+            # Preenche prioridade
+            prioridade = wait.until(EC.element_to_be_clickable((By.ID, "prioridade")))
+            prioridade.clear()
+            prioridade.send_keys("1")
+            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
+            
+            # Clique em salvar
+            salvar = wait.until(EC.element_to_be_clickable((By.ID, "salvar-gerenciamento-noticia")))
+            salvar.click()
+            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em salvar")
 
 
             # adicionar título
@@ -230,118 +263,118 @@ if submit:
             #titulo.send_keys(TITULO)
             
             # abrir o contêiner dos botões
-            container = wait.until(
-                EC.visibility_of_element_located(
-                    (By.CSS_SELECTOR, "div.note-btn-group.btn-group.note-view")
-                )
-            )
-            # localiza o botão desejado
-            botao_codeview = wait.until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, "button.note-btn.btn.btn-default.btn-sm.btn-codeview"))
-            )   
-            
-            # aguarda carregar o botão e clica nele
-            wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
-            botao_codeview.click()
-            
-            # espera até a classe "active" aparecer
-            wait.until(lambda d: "active" in botao_codeview.get_attribute("class"))
-            
-            # abrir o contêiner do editor de texto
-            area = wait.until(
-                EC.visibility_of_element_located((By.CSS_SELECTOR, ".note-editing-area"))
-            )
-            
-            #acha a textarea.note-codable
-            codable = wait.until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, "textarea.note-codable"))
-            )
-            html_content = HTML
-            
-            # injeta o HTML no atributo value
-            navegador.execute_script(
-                "arguments[0].value = arguments[1];", codable, html_content
-            )
-            
-            # dispara evento 'input' → editor percebe que mudou
-            navegador.execute_script(
-                "arguments[0].dispatchEvent(new Event('input', {bubbles:true}));",
-                codable
-            )
-            
-            # se o site salva ao perder foco, você pode dar um 'blur':
-            navegador.execute_script("arguments[0].blur();", codable)
-            
-            # fechar o contêiner dos botões
-            container = wait.until(
-                EC.visibility_of_element_located(
-                    (By.CSS_SELECTOR, "div.note-btn-group.btn-group.note-view")
-                )
-            )
-            # localiza o botão desejado
-            botao_codeview = container.presence_of_element_located(
-                By.CSS_SELECTOR,
-                "button.note-btn.btn.btn-default.btn-sm.btn-codeview"
-            )
-            # aguarda carregar o botão e clica nele
-            wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
-            botao_codeview.click()
-            # preencher data de inicio e fim
-            def preencher_data_com_foco(campo_id, valor):
-                campo = wait.until(EC.element_to_be_clickable((By.ID, campo_id)))
-                campo.clear()
-                campo.send_keys(valor)
-                # clique fora para perder foco e fechar pop-up
-                try:
-                    elemento_fora = wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-                    ActionChains(navegador).move_to_element(elemento_fora).click().perform()
-                except Exception as e:
-                    print("⚠️ Erro ao clicar fora (ignorado):", e)
-            # ---- uso real ----
-            preencher_data_com_foco("dataInicio", DATA_INICIO)
-            preencher_data_com_foco("dataFim",  DATA_FIM)
-            # adicionar prioridade
-            prioridade = wait.until(EC.presence_of_element_located
-                (By.ID, "prioridade")
-            )
-            prioridade.send_keys("1")
-            # abrir seleção de status
-            selecao = wait.until(EC.presence_of_element_located(
-                (By.ID,
-                "s2id_status"))
-            )
-            selecao.click()
-            # clicar na situação
-            select = wait.until(
-                EC.element_to_be_clickable((By.XPATH,"//ul[contains(@class,'select2-results')]//div[normalize-space()='Ativo']"))
-            )
-            select.click()
-            # achar o campo grupos
-            seletor = wait.until(EC.presence_of_element_located(
-                (By.ID,"s2id_grupos"))
-            )
-            seletor.click()
-            # entra na div que esta o campo de grupos
-            camp = wait.until(
-                EC.visibility_of_element_located((By.CSS_SELECTOR,"div.select2-container.select2-container-multi.form-control.select2-dropdown-open"))
-            )
-            # delimita quais campos e a sequência que existe dentro da div
-            search_input = wait.until(
-                EC.presence_of_element_located((By.CSS_SELECTOR,"ul li input"))
-            )
-            #digita o valor da busca
-            search_input.send_keys("admin")
-            # esoera o li aparecer e seleciona o nome do grupo
-            item = wait.until(EC.element_to_be_clickable((
-                By.XPATH,
-                "//ul/li[.//text()[normalize-space()='admin']]"
-            )))
-            item.click()
-            # seleciona o botão salvar
-            salvar = wait.until(EC.presence_of_element_located(
-                (By.ID, "salvar-gerenciamento-noticia"))
-            )
-            salvar.click()
+            #container = wait.until(
+            #    EC.visibility_of_element_located(
+            #        (By.CSS_SELECTOR, "div.note-btn-group.btn-group.note-view")
+            #    )
+            #)
+            ## localiza o botão desejado
+            #botao_codeview = wait.until(
+            #    EC.presence_of_element_located((By.CSS_SELECTOR, "button.note-btn.btn.btn-default.btn-sm.btn-codeview"))
+            #)   
+            #
+            ## aguarda carregar o botão e clica nele
+            #wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
+            #botao_codeview.click()
+            #
+            ## espera até a classe "active" aparecer
+            #wait.until(lambda d: "active" in botao_codeview.get_attribute("class"))
+            #
+            ## abrir o contêiner do editor de texto
+            #area = wait.until(
+            #    EC.visibility_of_element_located((By.CSS_SELECTOR, ".note-editing-area"))
+            #)
+            #
+            ##acha a textarea.note-codable
+            #codable = wait.until(
+            #    EC.presence_of_element_located((By.CSS_SELECTOR, "textarea.note-codable"))
+            #)
+            #html_content = HTML
+            #
+            ## injeta o HTML no atributo value
+            #navegador.execute_script(
+            #    "arguments[0].value = arguments[1];", codable, html_content
+            #)
+            #
+            ## dispara evento 'input' → editor percebe que mudou
+            #navegador.execute_script(
+            #    "arguments[0].dispatchEvent(new Event('input', {bubbles:true}));",
+            #    codable
+            #)
+            #
+            ## se o site salva ao perder foco, você pode dar um 'blur':
+            #navegador.execute_script("arguments[0].blur();", codable)
+            #
+            ## fechar o contêiner dos botões
+            #container = wait.until(
+            #    EC.visibility_of_element_located(
+            #        (By.CSS_SELECTOR, "div.note-btn-group.btn-group.note-view")
+            #    )
+            #)
+            ## localiza o botão desejado
+            #botao_codeview = container.presence_of_element_located(
+            #    By.CSS_SELECTOR,
+            #    "button.note-btn.btn.btn-default.btn-sm.btn-codeview"
+            #)
+            ## aguarda carregar o botão e clica nele
+            #wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
+            #botao_codeview.click()
+            ## preencher data de inicio e fim
+            #def preencher_data_com_foco(campo_id, valor):
+            #    campo = wait.until(EC.element_to_be_clickable((By.ID, campo_id)))
+            #    campo.clear()
+            #    campo.send_keys(valor)
+            #    # clique fora para perder foco e fechar pop-up
+            #    try:
+            #        elemento_fora = wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+            #        ActionChains(navegador).move_to_element(elemento_fora).click().perform()
+            #    except Exception as e:
+            #        print("⚠️ Erro ao clicar fora (ignorado):", e)
+            ## ---- uso real ----
+            #preencher_data_com_foco("dataInicio", DATA_INICIO)
+            #preencher_data_com_foco("dataFim",  DATA_FIM)
+            ## adicionar prioridade
+            #prioridade = wait.until(EC.presence_of_element_located
+            #    (By.ID, "prioridade")
+            #)
+            #prioridade.send_keys("1")
+            ## abrir seleção de status
+            #selecao = wait.until(EC.presence_of_element_located(
+            #    (By.ID,
+            #    "s2id_status"))
+            #)
+            #selecao.click()
+            ## clicar na situação
+            #select = wait.until(
+            #    EC.element_to_be_clickable((By.XPATH,"//ul[contains(@class,'select2-results')]//div[normalize-space()='Ativo']"))
+            #)
+            #select.click()
+            ## achar o campo grupos
+            #seletor = wait.until(EC.presence_of_element_located(
+            #    (By.ID,"s2id_grupos"))
+            #)
+            #seletor.click()
+            ## entra na div que esta o campo de grupos
+            #camp = wait.until(
+            #    EC.visibility_of_element_located((By.CSS_SELECTOR,"div.select2-container.select2-container-multi.form-control.select2-dropdown-open"))
+            #)
+            ## delimita quais campos e a sequência que existe dentro da div
+            #search_input = wait.until(
+            #    EC.presence_of_element_located((By.CSS_SELECTOR,"ul li input"))
+            #)
+            ##digita o valor da busca
+            #search_input.send_keys("admin")
+            ## esoera o li aparecer e seleciona o nome do grupo
+            #item = wait.until(EC.element_to_be_clickable((
+            #    By.XPATH,
+            #    "//ul/li[.//text()[normalize-space()='admin']]"
+            #)))
+            #item.click()
+            ## seleciona o botão salvar
+            #salvar = wait.until(EC.presence_of_element_located(
+            #    (By.ID, "salvar-gerenciamento-noticia"))
+            #)
+            #salvar.click()
             # espera até 3 segundos para os elementos aparecerem
             time.sleep(3)
             
