@@ -141,24 +141,17 @@ if submit:
             time.sleep(2)
             
             
-            try:
-                pesquisar = wait.until(EC.presence_of_element_located((By.ID,"pesMenu")))
-                pesquisar.send_keys("Gerenciamento de Notícias")
+            
+            pesquisar = wait.until(EC.presence_of_element_located((By.ID,"pesMenu")))
+            pesquisar.send_keys("Gerenciamento de Notícias")
                 
-                # Screenshot após pesquisa
-                screenshot_pesquisa = navegador.get_screenshot_as_png()
-                image_pesquisa = Image.open(io.BytesIO(screenshot_pesquisa))
-                st.image(image_pesquisa, caption=f"Screenshot após pesquisa em {url}", use_container_width=True)
-                st.write("Título após pesquisa:", navegador.title)
-                # ...existing code...
-            except Exception as e:
-                st.warning(f"ERROOOO")
-                st.warning(f"Não consegui logar em {url}. Confira os seletores!")
-                st.error(f"Tipo do erro: {repr(e)}")
-                st.error(f"Mensagem: {str(e)}")
-                st.text("HTML da página (trecho):")
-                st.text(navegador.page_source[:1000])  # Mostra os primeiros 1000 caracteres do HTML
-                continue
+            # Screenshot após pesquisa
+            screenshot_pesquisa = navegador.get_screenshot_as_png()
+            image_pesquisa = Image.open(io.BytesIO(screenshot_pesquisa))
+            st.image(image_pesquisa, caption=f"Screenshot após pesquisa em {url}", use_container_width=True)
+            st.write("Título após pesquisa:", navegador.title)
+            # ...existing code...
+            
             # ...existing code...
 
             # clicar na barra de pesquisar menu
@@ -168,12 +161,15 @@ if submit:
             opcao = WebDriverWait(navegador, 5).until(
                 EC.visibility_of_element_located((By.XPATH, "//li[normalize-space(.)='Gerenciamento de Notícias']"))
             )
+            
             if opcao.is_displayed() and opcao.is_enabled():
                 # ...antes do clique...
                 st.text("HTML do menu encontrado:")
                 st.text(opcao.get_attribute("outerHTML"))
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
-                opcao.click()
+                actions = ActionChains(navegador)
+                actions.move_to_element(opcao).click().perform()
+               # opcao.click()
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
             else:
                 st.error("O menu 'Gerenciamento de Notícias' não está visível ou habilitado.")
