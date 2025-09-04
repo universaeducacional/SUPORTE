@@ -174,7 +174,6 @@ if submit:
 
             # Tenta clicar via JS
             navegador.execute_script("arguments[0].click();", opcao)
-            st.info("Clique via JavaScript realizado.")
                 
             
             st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
@@ -235,26 +234,29 @@ if submit:
             
             # abrir o contêiner do editor de texto
             area = wait.until(
-                EC.visibility_of_element_located(
-                    (By.CSS_SELECTOR, ".note-editing-area")
-                )
+                EC.visibility_of_element_located((By.CSS_SELECTOR, ".note-editing-area"))
             )
+            
             #acha a textarea.note-codable
             codable = wait.until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, "textarea.note-codable"))
             )
             html_content = HTML
+            
             # injeta o HTML no atributo value
             navegador.execute_script(
                 "arguments[0].value = arguments[1];", codable, html_content
             )
+            
             # dispara evento 'input' → editor percebe que mudou
             navegador.execute_script(
                 "arguments[0].dispatchEvent(new Event('input', {bubbles:true}));",
                 codable
             )
+            
             # se o site salva ao perder foco, você pode dar um 'blur':
             navegador.execute_script("arguments[0].blur();", codable)
+            
             # fechar o contêiner dos botões
             container = wait.until(
                 EC.visibility_of_element_located(
