@@ -232,6 +232,13 @@ if submit:
                 navegador.execute_script("arguments[0].value = arguments[1];", codable, HTML or "<p>Conteúdo de teste</p>")
                 navegador.execute_script("arguments[0].dispatchEvent(new Event('input', {bubbles:true}));", codable)
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher conteúdo")
+                
+                # ...após preencher conteúdo HTML...
+                # Fecha o modo código (volta ao modo visual)
+                botao_codeview = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
+                botao_codeview.click()
+                time.sleep(0.5)
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após fechar codeview")
             
                 # Preenche Data Inicial
                 data_inicio = wait.until(EC.element_to_be_clickable((By.ID, "dataInicio")))
@@ -251,12 +258,8 @@ if submit:
                 prioridade.send_keys("1")
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
             
-                # ...existing code...
-
-                # Aguarda o Status ficar habilitado (evita erro de "not interactable")
+                # Aguarda o Status ficar habilitado
                 wait.until(lambda driver: driver.find_element(By.ID, "s2id_status").is_enabled())
-                
-                # Seleciona Status (Select2)
                 selecao_status = wait.until(EC.element_to_be_clickable((By.ID, "s2id_status")))
                 selecao_status.click()
                 time.sleep(0.5)
@@ -265,12 +268,13 @@ if submit:
                 time.sleep(0.5)
                 item = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")))
                 item.click()
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após selecionar status")
-                
-                # Fecha o overlay do Select2 (pressiona ESC)
                 navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
                 time.sleep(0.5)
-                
+
+                # Fecha o overlay do Select2 (pressiona ESC)
+                #navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+                #time.sleep(0.5)
+
                 # Seleciona Grupo (Select2)
                 selecao_grupos = wait.until(EC.element_to_be_clickable((By.ID, "s2id_grupos")))
                 selecao_grupos.click()
@@ -280,17 +284,18 @@ if submit:
                 time.sleep(0.5)
                 item_grupo = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='admin']")))
                 item_grupo.click()
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após selecionar grupo")
-                
+                navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+                time.sleep(0.5)
+
                 # Fecha o overlay do Select2 (pressiona ESC)
                 navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
                 time.sleep(0.5)
-                
+
                 # Clique em salvar
                 salvar = wait.until(EC.element_to_be_clickable((By.ID, "salvar-gerenciamento-noticia")))
                 salvar.click()
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em salvar")
-                
+
                 st.success("Notícia criada com sucesso!")
 
 # ...existing code...
