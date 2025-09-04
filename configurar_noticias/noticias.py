@@ -168,7 +168,12 @@ if submit:
                 EC.visibility_of_element_located((By.XPATH, "//li[normalize-space(.)='Gerenciamento de Notícias']"))
             )
             if opcao.is_displayed() and opcao.is_enabled():
+                # ...antes do clique...
+                st.text("HTML do menu encontrado:")
+                st.text(opcao.get_attribute("outerHTML"))
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
                 opcao.click()
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
             else:
                 st.error("O menu 'Gerenciamento de Notícias' não está visível ou habilitado.")
             # ...existing code...
