@@ -121,6 +121,14 @@ if submit:
             entrar_btn.click()
             time.sleep(2)  # garante que a próxima ação tenha elementos carregados
             
+            
+            # Screenshot após login
+            screenshot_login = navegador.get_screenshot_as_png()
+            image_login = Image.open(io.BytesIO(screenshot_login))
+            st.image(image_login, caption=f"Screenshot após login em {url}", use_container_width=True)
+            st.write("Título após login:", navegador.title)
+            # ...existing code...
+            
            # st.write("urls:", urls)
             #st.write("data do JSON:", data)
 
