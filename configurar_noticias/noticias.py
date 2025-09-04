@@ -221,6 +221,7 @@ if submit:
             titulo.send_keys(TITULO)
             st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
 
+
             # adicionar título
             #titulo = WebDriverWait(navegador, 2).until(
             #    EC.element_to_be_clickable((By.ID,"titulo"))
