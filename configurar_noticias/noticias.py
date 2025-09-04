@@ -191,7 +191,7 @@ if submit:
             
             # Espera até o botão estar clicável
             adicionar = wait.until(EC.element_to_be_clickable((By.ID, "btn-sis-gerenciamento-noticias-add")))
-            
+
             if adicionar is None:
                 st.error("Botão 'Adicionar' não encontrado!")
             else:
@@ -222,15 +222,17 @@ if submit:
                 )
             )
             # localiza o botão desejado
-            botao_codeview = container.presence_of_element_located(
-                By.CSS_SELECTOR,
-                "button.note-btn.btn.btn-default.btn-sm.btn-codeview"
-            )
+            botao_codeview = wait.until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "button.note-btn.btn.btn-default.btn-sm.btn-codeview"))
+            )   
+            
             # aguarda carregar o botão e clica nele
             wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
             botao_codeview.click()
+            
             # espera até a classe "active" aparecer
             wait.until(lambda d: "active" in botao_codeview.get_attribute("class"))
+            
             # abrir o contêiner do editor de texto
             area = wait.until(
                 EC.visibility_of_element_located(
@@ -238,8 +240,8 @@ if submit:
                 )
             )
             #acha a textarea.note-codable
-            codable = area.presence_of_element_located(
-                By.CSS_SELECTOR, "textarea.note-codable"
+            codable = wait.until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "textarea.note-codable"))
             )
             html_content = HTML
             # injeta o HTML no atributo value
