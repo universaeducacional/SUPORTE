@@ -214,12 +214,17 @@ if submit:
                     st.error(str(e))
 
             # ...continue o fluxo normalmente...
-            
+
             # Preenche título
             titulo = wait.until(EC.element_to_be_clickable((By.ID, "titulo")))
-            titulo.clear()
-            titulo.send_keys(TITULO)
-            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
+            if titulo is None:
+                st.error("Campo título não encontrado!")
+            else:
+                st.success("Campo título encontrado.")
+                titulo.clear()
+                titulo.send_keys(TITULO)
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
+
             
             # Ativa modo código do editor
             botao_codeview = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
