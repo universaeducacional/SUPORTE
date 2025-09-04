@@ -158,6 +158,7 @@ if submit:
             pesquisar = wait.until(EC.presence_of_element_located((By.ID,"pesMenu")))
             pesquisar.send_keys("Gerenciamento de Notícias")
             # ...existing code...
+            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
             opcao = WebDriverWait(navegador, 5).until(
                 EC.visibility_of_element_located((By.XPATH, "//li[normalize-space(.)='Gerenciamento de Notícias']"))
             )
@@ -178,6 +179,8 @@ if submit:
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
             else:
                 st.error("O menu 'Gerenciamento de Notícias' não está visível ou habilitado.")
+            
+            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
             # ...existing code...
             
             # Screenshot após acessar o menu Gerenciamento de Notícias
