@@ -258,22 +258,25 @@ if submit:
             except Exception as e:
                 st.error(f"Erro ao preencher conteúdo: {e}")
 
+            # Preenche Data Inicial
             try:
                 data_inicio = wait.until(EC.element_to_be_clickable((By.ID, "dataInicio")))
                 data_inicio.clear()
-                data_inicio.send_keys(DATA_INICIO)
+                data_inicio.send_keys(DATA_INICIO or "01/01/2025")
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data início")
             except Exception as e:
                 st.error(f"Erro ao preencher data início: {e}")
-
+            
+            # Preenche Data Final
             try:
                 data_fim = wait.until(EC.element_to_be_clickable((By.ID, "dataFim")))
                 data_fim.clear()
-                data_fim.send_keys(DATA_FIM)
+                data_fim.send_keys(DATA_FIM or "31/12/2025")
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data fim")
             except Exception as e:
                 st.error(f"Erro ao preencher data fim: {e}")
-
+            
+            # Preenche Prioridade
             try:
                 prioridade = wait.until(EC.element_to_be_clickable((By.ID, "prioridade")))
                 prioridade.clear()
@@ -281,6 +284,30 @@ if submit:
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
             except Exception as e:
                 st.error(f"Erro ao preencher prioridade: {e}")
+            
+            # Seleciona Status (Select2)
+            try:
+                selecao_status = wait.until(EC.element_to_be_clickable((By.ID, "s2id_status")))
+                selecao_status.click()
+                search_input = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".select2-input")))
+                search_input.send_keys("Ativo")
+                item = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")))
+                item.click()
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após selecionar status")
+            except Exception as e:
+                st.error(f"Erro ao selecionar status: {e}")
+            
+            # Seleciona Grupo (Select2)
+            try:
+                selecao_grupos = wait.until(EC.element_to_be_clickable((By.ID, "s2id_grupos")))
+                selecao_grupos.click()
+                search_input_grupos = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".select2-input")))
+                search_input_grupos.send_keys("admin")
+                item_grupo = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='admin']")))
+                item_grupo.click()
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após selecionar grupo")
+            except Exception as e:
+                st.error(f"Erro ao selecionar grupo: {e}")
 
             # Continue assim para status, grupos e salvar...
             
