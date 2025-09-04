@@ -258,31 +258,42 @@ if submit:
                 prioridade.send_keys("1")
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
             
-                # Aguarda o Status ficar habilitado
-                wait.until(lambda driver: driver.find_element(By.ID, "s2id_status").is_enabled())
+                # Seleciona Status (Select2)
                 selecao_status = wait.until(EC.element_to_be_clickable((By.ID, "s2id_status")))
                 selecao_status.click()
                 time.sleep(0.5)
-                search_input = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".select2-input")))
+                try:
+                    # Tenta o seletor padrão
+                    search_input = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".select2-input")))
+                except:
+                    # Tenta o seletor alternativo do Select2 mais novo
+                    search_input = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".select2-search__field")))
+                search_input.clear()
                 search_input.send_keys("Ativo")
                 time.sleep(0.5)
-                item = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")))
+                try:
+                    item = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")))
+                except:
+                    item = wait.until(EC.element_to_be_clickable((By.XPATH, "//li[contains(@class,'select2-results__option') and text()='Ativo']")))
                 item.click()
                 navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
                 time.sleep(0.5)
-
-                # Fecha o overlay do Select2 (pressiona ESC)
-                #navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
-                #time.sleep(0.5)
 
                 # Seleciona Grupo (Select2)
                 selecao_grupos = wait.until(EC.element_to_be_clickable((By.ID, "s2id_grupos")))
                 selecao_grupos.click()
                 time.sleep(0.5)
-                search_input_grupos = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".select2-input")))
+                try:
+                    search_input_grupos = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".select2-input")))
+                except:
+                    search_input_grupos = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".select2-search__field")))
+                search_input_grupos.clear()
                 search_input_grupos.send_keys("admin")
                 time.sleep(0.5)
-                item_grupo = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='admin']")))
+                try:
+                    item_grupo = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='admin']")))
+                except:
+                    item_grupo = wait.until(EC.element_to_be_clickable((By.XPATH, "//li[contains(@class,'select2-results__option') and text()='admin']")))
                 item_grupo.click()
                 navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
                 time.sleep(0.5)
