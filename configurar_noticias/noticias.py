@@ -167,7 +167,10 @@ if submit:
             actions = ActionChains(navegador)
             
             if opcao.is_displayed() and opcao.is_enabled():
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
                 actions.move_to_element(opcao).click().perform()
+                time.sleep(1)
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
             else:
                 st.error("O menu não está visível ou habilitado.")
                 
