@@ -164,9 +164,16 @@ if submit:
                 EC.visibility_of_element_located((By.XPATH, "//li[normalize-space(.)='Gerenciamento de Notícias']"))
             )
             
-            navegador.execute_script("arguments[0].scrollIntoView(true);", opcao)
-            time.sleep(0.5)
-            opcao.click()
+            actions = ActionChains(navegador)
+            
+            if opcao.is_displayed() and opcao.is_enabled():
+                actions.move_to_element(opcao).click().perform()
+            else:
+                st.error("O menu não está visível ou habilitado.")
+                
+                
+            #actions.move_to_element(opcao).click().perform()
+            #opcao.click()
             
             st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
             # ...existing code...
