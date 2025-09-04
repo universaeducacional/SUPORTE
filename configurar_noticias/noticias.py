@@ -169,52 +169,27 @@ if submit:
             # Screenshot antes do clique no menu
             st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
 
-            # Localiza o menu
-            opcao = WebDriverWait(navegador, 10).until(
-                EC.visibility_of_element_located((By.XPATH, "//li[normalize-space(.)='Gerenciamento de Notícias']"))
-            )
 
-            # Exibe HTML do menu para depuração
-            st.text("HTML do menu encontrado:")
-            st.text(opcao.get_attribute("outerHTML"))
-
-            # Rola até o elemento
-            navegador.execute_script("arguments[0].scrollIntoView(true);", opcao)
-            time.sleep(0.5)
-
-            # Tenta clicar usando ActionChains, se falhar tenta .click() direto
             try:
+                st.info("Buscando menu 'Gerenciamento de Notícias'...")
+                opcao = WebDriverWait(navegador, 10).until(
+                    EC.visibility_of_element_located((By.XPATH, "//li[normalize-space(.)='Gerenciamento de Notícias']"))
+                )
+                st.text("HTML do menu encontrado:")
+                st.text(opcao.get_attribute("outerHTML"))
+                navegador.execute_script("arguments[0].scrollIntoView(true);", opcao)
+                time.sleep(0.5)
                 actions = ActionChains(navegador)
                 actions.move_to_element(opcao).click().perform()
                 st.info("Clique com ActionChains realizado.")
             except Exception as e:
-                st.warning("ActionChains falhou, tentando .click() direto.")
-                try:
-                    opcao.click()
-                    st.info("Clique direto realizado.")
-                except Exception as e2:
-                    st.error("Nenhum método de clique funcionou.")
-                    st.error(str(e2))
-
-            # Screenshot depois do clique
-            time.sleep(1)
-            screenshot_depois = navegador.get_screenshot_as_png()
-            image_depois = Image.open(io.BytesIO(screenshot_depois))
-            st.image(image_depois, caption="Depois do clique no menu")
-
-            # Compara título antes e depois do clique
-            titulo_antes = navegador.title
-            time.sleep(2)
-            titulo_depois = navegador.title
-            st.write(f"Título antes: {titulo_antes}")
-            st.write(f"Título depois: {titulo_depois}")
-            if titulo_antes == titulo_depois:
-                st.warning("O clique não mudou a página. Pode haver popups, bloqueios ou o menu não está funcionando.")
-
-            # Exibe HTML da página após o clique (trecho)
-            st.text("HTML da página após clique (trecho):")
-            st.text(navegador.page_source[:1000])
-
+                st.error("Erro ao localizar ou clicar no menu 'Gerenciamento de Notícias'.")
+                st.error(f"Tipo do erro: {repr(e)}")
+                st.error(f"Mensagem: {str(e)}")
+                st.text("HTML da página (trecho):")
+                st.text(navegador.page_source[:1000])
+                navegador.quit()
+                break
             # ...existing code...
                 
                 
