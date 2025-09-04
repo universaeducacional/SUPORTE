@@ -193,7 +193,7 @@ if submit:
 
             # Espera até o botão estar clicável
             adicionar = wait.until(EC.element_to_be_clickable((By.ID, "btn-sis-gerenciamento-noticias-add")))
-            
+
             if adicionar is None:
                 st.error("Botão 'Adicionar' não encontrado!")
             else:
@@ -212,16 +212,22 @@ if submit:
                 except Exception as e:
                     st.warning("Modal não encontrado após clicar em Adicionar.")
                     st.error(str(e))
-            
+
             # ...continue o fluxo normalmente...
             
-            
-            # adicionar título
-            titulo = WebDriverWait(navegador, 2).until(
-                EC.element_to_be_clickable((By.ID,"titulo"))
-            )
+            # Preenche título
+            titulo = wait.until(EC.element_to_be_clickable((By.ID, "titulo")))
             titulo.clear()
             titulo.send_keys(TITULO)
+            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
+
+            # adicionar título
+            #titulo = WebDriverWait(navegador, 2).until(
+            #    EC.element_to_be_clickable((By.ID,"titulo"))
+            #)
+            #titulo.clear()
+            #titulo.send_keys(TITULO)
+            
             # abrir o contêiner dos botões
             container = wait.until(
                 EC.visibility_of_element_located(
