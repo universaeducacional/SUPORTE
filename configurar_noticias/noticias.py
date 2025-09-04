@@ -128,13 +128,6 @@ if submit:
             st.image(image_login, caption=f"Screenshot após login em {url}", use_container_width=True)
             st.write("Título após login:", navegador.title)
             # ...existing code...
-            
-           # st.write("urls:", urls)
-            #st.write("data do JSON:", data)
-
-            # Exibe os valores corretos
-            #st.text(f"Usuário usado: {usuario}")
-            #st.text(f"Senha usada: {senha}")
 
             # Salva no session_state
             st.session_state["usuario"] = usuario
@@ -148,10 +141,16 @@ if submit:
             time.sleep(2)
             
             
-            st.text("Erro 1")
             try:
                 pesquisar = wait.until(EC.presence_of_element_located((By.ID,"pesMenu")))
                 pesquisar.send_keys("Gerenciamento de Notícias")
+                
+                # Screenshot após pesquisa
+                screenshot_pesquisa = navegador.get_screenshot_as_png()
+                image_pesquisa = Image.open(io.BytesIO(screenshot_pesquisa))
+                st.image(image_pesquisa, caption=f"Screenshot após pesquisa em {url}", use_container_width=True)
+                st.write("Título após pesquisa:", navegador.title)
+                # ...existing code...
             except Exception as e:
                 st.warning(f"Não consegui logar em {url}. Confira os seletores!")
                 st.error(f"Tipo do erro: {repr(e)}")
