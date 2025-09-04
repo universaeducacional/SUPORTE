@@ -207,8 +207,6 @@ if submit:
                 # Exibe HTML do modal (se existir)
                 try:
                     modal = wait.until(EC.presence_of_element_located((By.ID, "modalNoticia")))
-                    st.text("HTML do modal:")
-                    st.text(modal.get_attribute("outerHTML"))
                 except Exception as e:
                     st.warning("Modal não encontrado após clicar em Adicionar.")
                     st.error(str(e))
@@ -227,7 +225,7 @@ if submit:
                     st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
             except Exception as e:
                 st.error(f"Erro ao preencher título: {e}")
-            
+
             # Ativa modo código do editor
             try:
                 botao_codeview = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
@@ -235,31 +233,56 @@ if submit:
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após ativar codeview")
             except Exception as e:
                 st.error(f"Erro ao ativar codeview: {e}")
+
+                        try:
+                titulo = wait.until(EC.element_to_be_clickable((By.ID, "titulo")))
+                st.success("Campo título encontrado.")
+                titulo.clear()
+                titulo.send_keys(TITULO)
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
+            except Exception as e:
+                st.error(f"Erro ao preencher título: {e}")
             
-            # Continue assim para cada campo...
+            try:
+                botao_codeview = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
+                botao_codeview.click()
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após ativar codeview")
+            except Exception as e:
+                st.error(f"Erro ao ativar codeview: {e}")
             
-            # Preenche conteúdo HTML
-            codable = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "textarea.note-codable")))
-            navegador.execute_script("arguments[0].value = arguments[1];", codable, HTML)
-            navegador.execute_script("arguments[0].dispatchEvent(new Event('input', {bubbles:true}));", codable)
-            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher conteúdo")
+            try:
+                codable = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "textarea.note-codable")))
+                navegador.execute_script("arguments[0].value = arguments[1];", codable, HTML)
+                navegador.execute_script("arguments[0].dispatchEvent(new Event('input', {bubbles:true}));", codable)
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher conteúdo")
+            except Exception as e:
+                st.error(f"Erro ao preencher conteúdo: {e}")
             
-            # Preenche datas
-            data_inicio = wait.until(EC.element_to_be_clickable((By.ID, "dataInicio")))
-            data_inicio.clear()
-            data_inicio.send_keys(DATA_INICIO)
-            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data início")
+            try:
+                data_inicio = wait.until(EC.element_to_be_clickable((By.ID, "dataInicio")))
+                data_inicio.clear()
+                data_inicio.send_keys(DATA_INICIO)
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data início")
+            except Exception as e:
+                st.error(f"Erro ao preencher data início: {e}")
             
-            data_fim = wait.until(EC.element_to_be_clickable((By.ID, "dataFim")))
-            data_fim.clear()
-            data_fim.send_keys(DATA_FIM)
-            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data fim")
+            try:
+                data_fim = wait.until(EC.element_to_be_clickable((By.ID, "dataFim")))
+                data_fim.clear()
+                data_fim.send_keys(DATA_FIM)
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data fim")
+            except Exception as e:
+                st.error(f"Erro ao preencher data fim: {e}")
             
-            # Preenche prioridade
-            prioridade = wait.until(EC.element_to_be_clickable((By.ID, "prioridade")))
-            prioridade.clear()
-            prioridade.send_keys("1")
-            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
+            try:
+                prioridade = wait.until(EC.element_to_be_clickable((By.ID, "prioridade")))
+                prioridade.clear()
+                prioridade.send_keys("1")
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
+            except Exception as e:
+                st.error(f"Erro ao preencher prioridade: {e}")
+            
+            # Continue assim para status, grupos e salvar...
             
             # Clique em salvar
             salvar = wait.until(EC.element_to_be_clickable((By.ID, "salvar-gerenciamento-noticia")))
