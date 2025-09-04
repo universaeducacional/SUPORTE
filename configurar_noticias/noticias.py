@@ -234,7 +234,7 @@ if submit:
             except Exception as e:
                 st.error(f"Erro ao ativar codeview: {e}")
 
-                        try:
+            try:
                 titulo = wait.until(EC.element_to_be_clickable((By.ID, "titulo")))
                 st.success("Campo título encontrado.")
                 titulo.clear()
@@ -242,14 +242,14 @@ if submit:
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
             except Exception as e:
                 st.error(f"Erro ao preencher título: {e}")
-            
+
             try:
                 botao_codeview = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
                 botao_codeview.click()
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após ativar codeview")
             except Exception as e:
                 st.error(f"Erro ao ativar codeview: {e}")
-            
+
             try:
                 codable = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "textarea.note-codable")))
                 navegador.execute_script("arguments[0].value = arguments[1];", codable, HTML)
@@ -257,7 +257,7 @@ if submit:
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher conteúdo")
             except Exception as e:
                 st.error(f"Erro ao preencher conteúdo: {e}")
-            
+
             try:
                 data_inicio = wait.until(EC.element_to_be_clickable((By.ID, "dataInicio")))
                 data_inicio.clear()
@@ -265,7 +265,7 @@ if submit:
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data início")
             except Exception as e:
                 st.error(f"Erro ao preencher data início: {e}")
-            
+
             try:
                 data_fim = wait.until(EC.element_to_be_clickable((By.ID, "dataFim")))
                 data_fim.clear()
@@ -273,7 +273,7 @@ if submit:
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data fim")
             except Exception as e:
                 st.error(f"Erro ao preencher data fim: {e}")
-            
+
             try:
                 prioridade = wait.until(EC.element_to_be_clickable((By.ID, "prioridade")))
                 prioridade.clear()
@@ -281,7 +281,7 @@ if submit:
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
             except Exception as e:
                 st.error(f"Erro ao preencher prioridade: {e}")
-            
+
             # Continue assim para status, grupos e salvar...
             
             # Clique em salvar
