@@ -173,34 +173,20 @@ if submit:
 
             st.info("Buscando menu 'Gerenciamento de Notícias'...")
             
-            match = re.search(r'.{0,500}Gerenciamento de Notícias.{0,500}', navegador.page_source)
-            if match:
-                st.text(match.group())
-            else:
-                st.error("Trecho com 'Gerenciamento de Notícias' não encontrado.")
-
-            # Exibe trecho do HTML para inspeção manual
-            st.text(navegador.page_source[:5000])
-
-            try:
-                opcao = WebDriverWait(navegador, 10).until(
-                    EC.visibility_of_element_located((By.XPATH, "//a[contains(text(), 'Gerenciamento de Notícias')]"))
-                )
-                st.text("HTML do menu encontrado:")
-                st.text(opcao.get_attribute("outerHTML"))
-                navegador.execute_script("arguments[0].scrollIntoView(true);", opcao)
-                time.sleep(0.5)
-                actions = ActionChains(navegador)
-                actions.move_to_element(opcao).click().perform()
-                st.info("Clique com ActionChains realizado.")
-            except Exception as e:
-                st.error("Erro ao localizar ou clicar no menu 'Gerenciamento de Notícias'.")
-                st.error(f"Tipo do erro: {repr(e)}")
-                st.error(f"Mensagem: {str(e)}")
-                st.text("HTML da página (trecho):")
-                st.text(navegador.page_source[:5000])
-                navegador.quit()
-                break
+            # Busca o elemento mesmo oculto
+            opcao = WebDriverWait(navegador, 10).until(
+                EC.presence_of_element_located((By.XPATH, "//a[contains(text(), 'Gerenciamento de Notícias')]"))
+            )
+            st.text("HTML do menu encontrado:")
+            st.text(opcao.get_attribute("outerHTML"))
+            
+            # Torna visível (se necessário)
+            navegador.execute_script("arguments[0].style.display = 'block';", opcao)
+            time.sleep(0.5)
+            
+            # Tenta clicar via JS
+            navegador.execute_script("arguments[0].click();", opcao)
+            st.info("Clique via JavaScript realizado.")
                 
                 
             #actions.move_to_element(opcao).click().perform()
