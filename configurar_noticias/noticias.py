@@ -168,13 +168,21 @@ if submit:
                     "//li[normalize-space(.)='Gerenciamento de Notícias']"))
             )
             opcao.click()
-            st.text("Erro 2")
+            
+            # Screenshot após acessar o menu Gerenciamento de Notícias
+            screenshot_menu = navegador.get_screenshot_as_png()
+            image_menu = Image.open(io.BytesIO(screenshot_menu))
+            st.image(image_menu, caption=f"Screenshot após acessar menu em {url}", use_container_width=True)
+            st.write("Título após acessar menu:", navegador.title)
+            
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
+            
             # clicar em adicionar nova noticia
             adicionar = wait.until(EC.presence_of_element_located((By.ID,"btn-sis-gerenciamento-noticias-add")))
             adicionar.click()
-            st.text("Erro 3")
+            
+            
             # adicionar título
             titulo = WebDriverWait(navegador, 2).until(
                 EC.element_to_be_clickable((By.ID,"titulo"))
