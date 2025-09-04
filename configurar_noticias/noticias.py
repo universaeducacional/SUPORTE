@@ -159,9 +159,10 @@ if submit:
             pesquisar.send_keys("Gerenciamento de Notícias")
             # ...existing code...
             st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
-            st.text("HTML do menu encontrado:")
-            st.text(opcao.get_attribute("outerHTML"))
+            
             opcao = WebDriverWait(navegador, 5).until(
+                st.text("HTML do menu encontrado:"),
+                st.text(opcao.get_attribute("outerHTML")),
                 EC.visibility_of_element_located((By.XPATH, "//li[normalize-space(.)='Gerenciamento de Notícias']"))
             )
             
