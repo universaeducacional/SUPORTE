@@ -173,7 +173,7 @@ if submit:
             try:
                 st.info("Buscando menu 'Gerenciamento de Notícias'...")
                 opcao = WebDriverWait(navegador, 10).until(
-                    EC.visibility_of_element_located((By.XPATH, "//*[contains(text(), 'Gerenciamento de Notícias')]"))
+                    EC.visibility_of_element_located((By.XPATH, "//li/a[normalize-space(.)='Gerenciamento de Notícias']"))
                 )
                 st.text("HTML do menu encontrado:")
                 st.text(opcao.get_attribute("outerHTML"))
@@ -187,7 +187,7 @@ if submit:
                 st.error(f"Tipo do erro: {repr(e)}")
                 st.error(f"Mensagem: {str(e)}")
                 st.text("HTML da página (trecho):")
-                st.text(navegador.page_source[:1000])
+                st.text(navegador.page_source[:5000])
                 navegador.quit()
                 break
             # ...existing code...
