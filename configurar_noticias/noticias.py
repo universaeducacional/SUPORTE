@@ -182,6 +182,13 @@ if submit:
             adicionar = wait.until(EC.presence_of_element_located((By.ID,"btn-sis-gerenciamento-noticias-add")))
             adicionar.click()
             
+            # Screenshot após clicar em "Nova Notícia"
+            screenshot_nova_noticia = navegador.get_screenshot_as_png()
+            image_nova_noticia = Image.open(io.BytesIO(screenshot_nova_noticia))
+            st.image(image_nova_noticia, caption=f"Screenshot após clicar em Nova Notícia em {url}", use_container_width=True)
+            st.write("Título após clicar em Nova Notícia:", navegador.title)
+            # ...existing code...
+            
             
             # adicionar título
             titulo = WebDriverWait(navegador, 2).until(
