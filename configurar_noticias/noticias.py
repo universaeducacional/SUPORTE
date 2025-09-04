@@ -173,7 +173,7 @@ if submit:
             try:
                 st.info("Buscando menu 'Gerenciamento de Notícias'...")
                 opcao = WebDriverWait(navegador, 10).until(
-                    EC.visibility_of_element_located((By.XPATH, "//a[contains(text(), 'Gerenciamento de Notícias')]"))
+                    EC.visibility_of_element_located((By.XPATH, "//*[contains(text(), 'Gerenciamento de Notícias')]"))
                 )
                 st.text("HTML do menu encontrado:")
                 st.text(opcao.get_attribute("outerHTML"))
