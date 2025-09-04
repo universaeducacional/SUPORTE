@@ -161,13 +161,11 @@ if submit:
             st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
             
             opcao = WebDriverWait(navegador, 5).until(
-                st.text("HTML do menu encontrado:"),
-                st.text(opcao.get_attribute("outerHTML")),
                 EC.visibility_of_element_located((By.XPATH, "//li[normalize-space(.)='Gerenciamento de Notícias']"))
             )
             
-            st.text("HTML do menu encontrado:")
-            st.text(opcao.get_attribute("outerHTML"))
+            navegador.execute_script("arguments[0].scrollIntoView(true);", opcao)
+            time.sleep(0.5)
             opcao.click()
             
             st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
