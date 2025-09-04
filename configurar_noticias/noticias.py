@@ -151,22 +151,12 @@ if submit:
             image_pesquisa = Image.open(io.BytesIO(screenshot_pesquisa))
             st.image(image_pesquisa, caption=f"Screenshot após pesquisa em {url}", use_container_width=True)
             st.write("Título após pesquisa:", navegador.title)
-            # ...existing code...
-            
-            # ...existing code...
+
 
             # clicar na barra de pesquisar menu
             pesquisar = wait.until(EC.presence_of_element_located((By.ID,"pesMenu")))
             pesquisar.send_keys("Gerenciamento de Notícias")
-            # ...existing code...
-           # st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
-           # 
-           # opcao = WebDriverWait(navegador, 5).until(
-           #     EC.visibility_of_element_located((By.XPATH, "//li[normalize-space(.)='Gerenciamento de Notícias']"))
-           # )
-            
-            # ...existing code...
-
+          
             # Screenshot antes do clique no menu
             st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
 
@@ -177,20 +167,15 @@ if submit:
             opcao = WebDriverWait(navegador, 10).until(
                 EC.presence_of_element_located((By.XPATH, "//a[contains(text(), 'Gerenciamento de Notícias')]"))
             )
-            st.text("HTML do menu encontrado:")
-            st.text(opcao.get_attribute("outerHTML"))
-            
+
             # Torna visível (se necessário)
             navegador.execute_script("arguments[0].style.display = 'block';", opcao)
             time.sleep(0.5)
-            
+
             # Tenta clicar via JS
             navegador.execute_script("arguments[0].click();", opcao)
             st.info("Clique via JavaScript realizado.")
                 
-                
-            #actions.move_to_element(opcao).click().perform()
-            #opcao.click()
             
             st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
             # ...existing code...
@@ -207,6 +192,9 @@ if submit:
             # clicar em adicionar nova noticia
             adicionar = wait.until(EC.presence_of_element_located((By.ID,"btn-sis-gerenciamento-noticias-add")))
             adicionar.click()
+            
+            st.text("HTML do menu encontrado:")
+            st.text(adicionar.get_attribute("outerHTML"))
             
             # Screenshot após clicar em "Nova Notícia"
             screenshot_nova_noticia = navegador.get_screenshot_as_png()
