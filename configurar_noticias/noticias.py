@@ -18,6 +18,7 @@ import subprocess
 import requests
 from PIL import Image
 import subprocess
+import re
 
 
 st.title("Portal de acesso automático")
@@ -171,10 +172,16 @@ if submit:
 
 
             st.info("Buscando menu 'Gerenciamento de Notícias'...")
+            
+            match = re.search(r'.{0,500}Gerenciamento de Notícias.{0,500}', navegador.page_source)
+            if match:
+                st.text(match.group())
+            else:
+                st.error("Trecho com 'Gerenciamento de Notícias' não encontrado.")
 
             # Exibe trecho do HTML para inspeção manual
             st.text(navegador.page_source[:5000])
-            
+
             try:
                 opcao = WebDriverWait(navegador, 10).until(
                     EC.visibility_of_element_located((By.XPATH, "//a[contains(text(), 'Gerenciamento de Notícias')]"))
