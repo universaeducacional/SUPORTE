@@ -187,7 +187,7 @@ if submit:
                 st.error(f"Tipo do erro: {repr(e)}")
                 st.error(f"Mensagem: {str(e)}")
                 st.text("HTML da página (trecho):")
-                st.text(navegador.page_source[:5000])
+                st.text(navegador.page_source[:15000])
                 navegador.quit()
                 break
             # ...existing code...
