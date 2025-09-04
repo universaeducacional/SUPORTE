@@ -216,20 +216,27 @@ if submit:
             # ...continue o fluxo normalmente...
 
             # Preenche título
-            titulo = wait.until(EC.element_to_be_clickable((By.ID, "titulo")))
-            if titulo is None:
-                st.error("Campo título não encontrado!")
-            else:
-                st.success("Campo título encontrado.")
-                titulo.clear()
-                titulo.send_keys(TITULO)
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
-
+            try:
+                titulo = wait.until(EC.element_to_be_clickable((By.ID, "titulo")))
+                if titulo is None:
+                    st.error("Campo título não encontrado!")
+                else:
+                    st.success("Campo título encontrado.")
+                    titulo.clear()
+                    titulo.send_keys(TITULO)
+                    st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
+            except Exception as e:
+                st.error(f"Erro ao preencher título: {e}")
             
             # Ativa modo código do editor
-            botao_codeview = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
-            botao_codeview.click()
-            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após ativar codeview")
+            try:
+                botao_codeview = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
+                botao_codeview.click()
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após ativar codeview")
+            except Exception as e:
+                st.error(f"Erro ao ativar codeview: {e}")
+            
+            # Continue assim para cada campo...
             
             # Preenche conteúdo HTML
             codable = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "textarea.note-codable")))
