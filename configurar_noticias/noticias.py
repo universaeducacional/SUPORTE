@@ -163,11 +163,15 @@ if submit:
             # clicar na barra de pesquisar menu
             pesquisar = wait.until(EC.presence_of_element_located((By.ID,"pesMenu")))
             pesquisar.send_keys("Gerenciamento de Notícias")
-            opcao = WebDriverWait(navegador, 2).until(
-                EC.element_to_be_clickable((By.XPATH,
-                    "//li[normalize-space(.)='Gerenciamento de Notícias']"))
+            # ...existing code...
+            opcao = WebDriverWait(navegador, 5).until(
+                EC.visibility_of_element_located((By.XPATH, "//li[normalize-space(.)='Gerenciamento de Notícias']"))
             )
-            opcao.click()
+            if opcao.is_displayed() and opcao.is_enabled():
+                opcao.click()
+            else:
+                st.error("O menu 'Gerenciamento de Notícias' não está visível ou habilitado.")
+            # ...existing code...
             
             # Screenshot após acessar o menu Gerenciamento de Notícias
             screenshot_menu = navegador.get_screenshot_as_png()
