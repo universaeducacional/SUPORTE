@@ -189,23 +189,31 @@ if submit:
             time.sleep(2)
             
             # Espera até o botão estar clicável
-            adicionar = wait.until(EC.element_to_be_clickable((By.ID, "btn-sis-gerenciamento-noticias-add")))
+            # ...existing code...
 
+            # Espera até o botão estar clicável
+            adicionar = wait.until(EC.element_to_be_clickable((By.ID, "btn-sis-gerenciamento-noticias-add")))
+            
             if adicionar is None:
                 st.error("Botão 'Adicionar' não encontrado!")
             else:
                 st.success("Botão 'Adicionar' encontrado e pronto para clique.")
                 adicionar.click()
+                st.info("Clique em 'Adicionar' realizado.")
+                # Screenshot após clicar em Adicionar
+                screenshot_modal = navegador.get_screenshot_as_png()
+                image_modal = Image.open(io.BytesIO(screenshot_modal))
+                st.image(image_modal, caption="Screenshot após clicar em Adicionar")
+                # Exibe HTML do modal (se existir)
+                try:
+                    modal = wait.until(EC.presence_of_element_located((By.ID, "modalNoticia")))
+                    st.text("HTML do modal:")
+                    st.text(modal.get_attribute("outerHTML"))
+                except Exception as e:
+                    st.warning("Modal não encontrado após clicar em Adicionar.")
+                    st.error(str(e))
             
-            st.text("HTML do menu encontrado:")
-            st.text(adicionar.get_attribute("outerHTML"))
-            
-            # Screenshot após clicar em "Nova Notícia"
-            screenshot_nova_noticia = navegador.get_screenshot_as_png()
-            image_nova_noticia = Image.open(io.BytesIO(screenshot_nova_noticia))
-            st.image(image_nova_noticia, caption=f"Screenshot após clicar em Nova Notícia em {url}", use_container_width=True)
-            st.write("Título após clicar em Nova Notícia:", navegador.title)
-            # ...existing code...
+            # ...continue o fluxo normalmente...
             
             
             # adicionar título
