@@ -304,11 +304,12 @@ if submit:
                 search_input_grupos.send_keys("admin")
 
                 # espera a opção aparecer visível
-                item_grupo = wait.until(
+                item_grupo = WebDriverWait(navegador, 10).until(
                     EC.visibility_of_element_located(
                         (By.XPATH, "//li[contains(@class,'select2-results__option') and normalize-space(.)='admin']")
                     )
                 )
+
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade IBB")
                 # clica (se não rolar, força via JS)
                 try:
