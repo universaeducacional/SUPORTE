@@ -299,9 +299,16 @@ if submit:
 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade")
                 
+                
+                # Espera até o input aparecer
+                campo_pesquisa = WebDriverWait(navegador, 10).until(
+                    EC.visibility_of_element_located((By.CSS_SELECTOR, "input#select2-input.select2-focused"))  # ou By.ID, By.NAME, By.XPATH
+                )
+
                 # digita "admin"
                 search_input_grupos.clear()
                 search_input_grupos.send_keys("admin")
+                time.sleep(0.5)
                 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade II")
 
