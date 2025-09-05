@@ -299,32 +299,27 @@ if submit:
 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade")
                 
+                # digita "admin"
                 search_input_grupos.clear()
                 search_input_grupos.send_keys("admin")
-                time.sleep(0.5)
-                
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade II")
 
-                item_grupo = None
-                for xpath in [
-                    "//div[contains(@class,'select2-result-label') and text()='admin']",
-                    "//li[contains(@class,'select2-results__option') and text()='admin']",
-                    "//ul/li[.//text()[normalize-space()='admin']]",
-                    "//li[normalize-space()='admin']"
-                ]:
-                    try:
-                        item_grupo = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
-                        break
-                    except:
-                        continue
-                    
-                if not item_grupo:
-                    raise Exception("Item 'admin' do Select2 (Grupo) não encontrado!")
-                
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade III")
-                item_grupo.click()
+                # espera a opção aparecer visível
+                item_grupo = wait.until(
+                    EC.visibility_of_element_located(
+                        (By.XPATH, "//li[contains(@class,'select2-results__option') and normalize-space(.)='admin']")
+                    )
+                )
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade IBB")
+                # clica (se não rolar, força via JS)
+                try:
+                    item_grupo.click()
+                except:
+                    navegador.execute_script("arguments[0].click();", item_grupo)
+
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade IAAA")
+                # fecha o dropdown (caso não feche sozinho)
                 navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
-                time.sleep(0.5)
+
                 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade I")
 
