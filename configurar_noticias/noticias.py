@@ -290,7 +290,10 @@ if submit:
                 
                 html = navegador.page_source
                 print("select2-input" in html, "select2-search__field" in html)
-
+                print("Tag:", search_input_grupos.tag_name)
+                print("Classes:", search_input_grupos.get_attribute("class"))
+                print("Display:", search_input_grupos.is_displayed())
+                print("Enabled:", search_input_grupos.is_enabled())
 
                 search_input_grupos = None
                 for selector in [".select2-input.select2-default", ".select2-search__field", "ul.select2-results li input", "input.select2-input"]:
@@ -306,7 +309,12 @@ if submit:
 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade")
                 
-                
+                html = navegador.page_source
+                print("select2-input" in html, "select2-search__field" in html)
+                print("Tag:", search_input_grupos.tag_name)
+                print("Classes:", search_input_grupos.get_attribute("class"))
+                print("Display:", search_input_grupos.is_displayed())
+                print("Enabled:", search_input_grupos.is_enabled())                
                 
 
                 # digita "admin"
