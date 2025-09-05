@@ -266,13 +266,13 @@ if submit:
                 selecao_status = wait.until(EC.element_to_be_clickable((By.ID, "s2id_status")))
                 selecao_status.click()
                 time.sleep(0.5)
-                
+
                 # Aguarda o dropdown abrir
                 wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".select2-drop-active")))
-                
+
                 # Localiza o item "Ativo"
-                item = wait.until(EC.presence_of_element_loc((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")))
-                
+                item = wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")))
+
                 # Clica via JavaScript (ignora overlays)
                 navegador.execute_script("arguments[0].click();", item)
                 time.sleep(0.5)
