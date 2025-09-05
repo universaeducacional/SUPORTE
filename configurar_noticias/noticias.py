@@ -311,20 +311,21 @@ if submit:
                         (By.XPATH, "//li[contains(@class,'select2-results__option') and normalize-space(.)='admin']")
                     )
                 )
+                item_grupo.click()
 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade IBB")
                 # clica (se não rolar, força via JS)
-                try:
-                    item_grupo.click()
-                except:
-                    navegador.execute_script("arguments[0].click();", item_grupo)
+                #try:
+                #    item_grupo.click()
+                #except:
+                #    navegador.execute_script("arguments[0].click();", item_grupo)
 
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade IAAA")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade IAAA")
                 # fecha o dropdown (caso não feche sozinho)
                 navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
 
                 
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade I")
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade III")
 
                 # Clique em salvar
                 salvar = wait.until(EC.element_to_be_clickable((By.ID, "salvar-gerenciamento-noticia")))
