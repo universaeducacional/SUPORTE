@@ -297,11 +297,13 @@ if submit:
                 if not search_input_grupos:
                     raise Exception("Campo de busca do Select2 (Grupo) não encontrado!")
 
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status II")
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade")
                 
                 search_input_grupos.clear()
                 search_input_grupos.send_keys("admin")
                 time.sleep(0.5)
+                
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade II")
 
                 item_grupo = None
                 for xpath in [
@@ -319,12 +321,12 @@ if submit:
                 if not item_grupo:
                     raise Exception("Item 'admin' do Select2 (Grupo) não encontrado!")
                 
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status II")
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade III")
                 item_grupo.click()
                 navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
                 time.sleep(0.5)
                 
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status II")
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade IV")
 
                 # Clique em salvar
                 salvar = wait.until(EC.element_to_be_clickable((By.ID, "salvar-gerenciamento-noticia")))
