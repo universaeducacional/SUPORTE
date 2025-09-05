@@ -304,10 +304,21 @@ if submit:
                     
         
                 # digita "admin"
-                search_input_grupos.clear()
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade II")
-                search_input_grupos.send_keys("admin")
-                time.sleep(0.5)
+                
+                try:
+                    search_input_grupos.click()  # garante foco
+                    search_input_grupos.clear()
+                    search_input_grupos.send_keys("admin")
+                    print("Valor após send_keys:", search_input_grupos.get_attribute("value"))
+                except Exception as e:
+                    print("Erro no send_keys:", e)
+                    # plano B → força via JS
+                    navegador.execute_script("arguments[0].value='admin'; arguments[0].dispatchEvent(new Event('input'));", search_input_grupos)
+
+                #search_input_grupos.clear()
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade II")
+                #search_input_grupos.send_keys("admin")
+                #time.sleep(0.5)
                 
                 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade III")
