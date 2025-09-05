@@ -285,29 +285,26 @@ if submit:
                 ActionChains(navegador).move_to_element(selecao_grupos).click().perform()
                 time.sleep(0.5)
 
-               # search_input_grupos = None
-               # for selector in [".select2-input", ".select2-search__field", "ul.select2-results li input", "input.select2-input"]:
-               #     try:
-               #         search_input_grupos = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
-               #         if search_input_grupos.is_displayed() and search_input_grupos.is_enabled():
-               #             break
-               #     except:
-               #         continue
-               #     
-               # if not search_input_grupos:
-               #     raise Exception("Campo de busca do Select2 (Grupo) não encontrado!")
+                search_input_grupos = None
+                for selector in [".select2-input.select2-default", ".select2-search__field", "ul.select2-results li input", "input.select2-input"]:
+                    try:
+                        search_input_grupos = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
+                        if search_input_grupos.is_displayed() and search_input_grupos.is_enabled():
+                            break
+                    except:
+                        continue
+                    
+                if not search_input_grupos:
+                    raise Exception("Campo de busca do Select2 (Grupo) não encontrado!")
 
-               # st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade")
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade")
                 
                 
-                # Espera até o input aparecer
-                campo_pesquisa = WebDriverWait(navegador, 10).until(
-                    EC.visibility_of_element_located((By.CSS_SELECTOR, "input#select2-input.select2-focused"))  # ou By.ID, By.NAME, By.XPATH
-                )
+                
 
                 # digita "admin"
-                campo_pesquisa.clear()
-                campo_pesquisa.send_keys("admin")
+                search_input_grupos.clear()
+                search_input_grupos.send_keys("admin")
                 time.sleep(0.5)
                 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade II")
