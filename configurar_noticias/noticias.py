@@ -275,7 +275,7 @@ if submit:
                 item = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")))
 
                 # Clica via JavaScript (ignora overlays)
-                navegador.execute_script("arguments[0].click();", item)
+                item.click()
                 time.sleep(0.5)
 
                 # --- Seleciona Grupo (Select2) ---
