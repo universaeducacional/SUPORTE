@@ -269,10 +269,10 @@ if submit:
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status")
 
                 # Aguarda o dropdown abrir
-                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".select2-drop-active")))
+                wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".select2-drop-active")))
 
                 # Localiza o item "Ativo"
-                item = wait.until(EC.presence_of_element_located((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")))
+                item = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")))
 
                 # Clica via JavaScript (ignora overlays)
                 navegador.execute_script("arguments[0].click();", item)
