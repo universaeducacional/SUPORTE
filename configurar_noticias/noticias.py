@@ -270,24 +270,15 @@ if submit:
 
                 # Aguarda o dropdown abrir
                 wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".select2-drop-active")))
+
                 
-                html = navegador.page_source
-                print("select2-input" in html, "select2-search__field" in html)
-
-
                 # Localiza o item "Ativo"
                 item = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")))
-                
-                html = navegador.page_source
-                print("select2-input" in html, "select2-search__field" in html)
 
 
                 # Clica via JavaScript (ignora overlays)
                 item.click()
                 time.sleep(0.5)
-                
-                html = navegador.page_source
-                print("select2-input" in html, "select2-search__field" in html)
 
                 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status II")
@@ -296,6 +287,10 @@ if submit:
                 selecao_grupos = wait.until(EC.element_to_be_clickable((By.ID, "s2id_grupos")))
                 ActionChains(navegador).move_to_element(selecao_grupos).click().perform()
                 time.sleep(0.5)
+                
+                html = navegador.page_source
+                print("select2-input" in html, "select2-search__field" in html)
+
 
                 search_input_grupos = None
                 for selector in [".select2-input.select2-default", ".select2-search__field", "ul.select2-results li input", "input.select2-input"]:
@@ -318,6 +313,14 @@ if submit:
                 search_input_grupos.clear()
                 search_input_grupos.send_keys("admin")
                 time.sleep(0.5)
+                
+                html = navegador.page_source
+                print("select2-input" in html, "select2-search__field" in html)
+                
+                print("Tag:", search_input_grupos.tag_name)
+                print("Classes:", search_input_grupos.get_attribute("class"))
+                print("Display:", search_input_grupos.is_displayed())
+                print("Enabled:", search_input_grupos.is_enabled())
                 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade II")
 
