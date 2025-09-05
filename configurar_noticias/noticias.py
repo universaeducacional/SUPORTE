@@ -262,16 +262,19 @@ if submit:
 
                 from selenium.webdriver.common.action_chains import ActionChains
 
-                # --- Seleciona Status (Select2) ---
+                # Seleciona Status (Select2)
                 selecao_status = wait.until(EC.element_to_be_clickable((By.ID, "s2id_status")))
-                ActionChains(navegador).move_to_element(selecao_status).click().perform()
+                selecao_status.click()
                 time.sleep(0.5)
+                
+                # Aguarda o dropdown do Select2 aparecer
+                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".select2-drop-active")))
                 
                 # Tenta todos os seletores possíveis para o campo de busca do Status
                 search_input = None
                 for selector in [".select2-input", ".select2-search__field", "ul.select2-results li input", "input.select2-input"]:
                     try:
-                        search_input = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
+                        search_input = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
                         if search_input.is_displayed() and search_input.is_enabled():
                             break
                     except:
@@ -304,12 +307,12 @@ if submit:
                 item.click()
                 navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
                 time.sleep(0.5)
-                
+
                 # --- Seleciona Grupo (Select2) ---
                 selecao_grupos = wait.until(EC.element_to_be_clickable((By.ID, "s2id_grupos")))
                 ActionChains(navegador).move_to_element(selecao_grupos).click().perform()
                 time.sleep(0.5)
-                
+
                 search_input_grupos = None
                 for selector in [".select2-input", ".select2-search__field", "ul.select2-results li input", "input.select2-input"]:
                     try:
@@ -321,11 +324,11 @@ if submit:
                     
                 if not search_input_grupos:
                     raise Exception("Campo de busca do Select2 (Grupo) não encontrado!")
-                
+
                 search_input_grupos.clear()
                 search_input_grupos.send_keys("admin")
                 time.sleep(0.5)
-                
+
                 item_grupo = None
                 for xpath in [
                     "//div[contains(@class,'select2-result-label') and text()='admin']",
@@ -341,16 +344,16 @@ if submit:
                     
                 if not item_grupo:
                     raise Exception("Item 'admin' do Select2 (Grupo) não encontrado!")
-                
+
                 item_grupo.click()
                 navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
                 time.sleep(0.5)
-                
+
                 # Clique em salvar
                 salvar = wait.until(EC.element_to_be_clickable((By.ID, "salvar-gerenciamento-noticia")))
                 salvar.click()
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em salvar")
-                
+
                 st.success("Notícia criada com sucesso!")
             
             # ...existing code...
