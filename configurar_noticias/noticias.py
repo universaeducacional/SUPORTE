@@ -270,13 +270,25 @@ if submit:
 
                 # Aguarda o dropdown abrir
                 wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".select2-drop-active")))
+                
+                html = navegador.page_source
+                print("select2-input" in html, "select2-search__field" in html)
+
 
                 # Localiza o item "Ativo"
                 item = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")))
+                
+                html = navegador.page_source
+                print("select2-input" in html, "select2-search__field" in html)
+
 
                 # Clica via JavaScript (ignora overlays)
                 item.click()
                 time.sleep(0.5)
+                
+                html = navegador.page_source
+                print("select2-input" in html, "select2-search__field" in html)
+
                 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status II")
 
