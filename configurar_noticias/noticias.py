@@ -266,7 +266,7 @@ if submit:
                 selecao_status = wait.until(EC.element_to_be_clickable((By.ID, "s2id_status")))
                 selecao_status.click()
                 time.sleep(0.5)
-                st.image(Image.open(io.BytesIO(selecao_status.get_screenshot_as_png())), caption="Após clicar em Status")
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status")
 
                 # Aguarda o dropdown abrir
                 wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".select2-drop-active")))
