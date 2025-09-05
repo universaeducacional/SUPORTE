@@ -281,11 +281,8 @@ if submit:
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status II")
 
                 # --- Seleciona Grupo (Select2) ---
-                selecao_grupos = wait.until(
-                    EC.element_to_be_clickable((By.CSS_SELECTOR, "#s2id_grupos a.select2-choice, #s2id_grupos span.select2-selection"))
-                )
-                selecao_grupos.click()
-
+                selecao_grupos = wait.until(EC.element_to_be_clickable((By.ID, "s2id_grupos")))
+                ActionChains(navegador).move_to_element(selecao_grupos).click().perform()
                 time.sleep(0.5)
 
                 search_input_grupos = None
@@ -329,7 +326,7 @@ if submit:
                 navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
                 time.sleep(0.5)
                 
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade IV")
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade I")
 
                 # Clique em salvar
                 salvar = wait.until(EC.element_to_be_clickable((By.ID, "salvar-gerenciamento-noticia")))
