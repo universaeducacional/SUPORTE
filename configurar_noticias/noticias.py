@@ -302,6 +302,8 @@ if submit:
                 # digita "admin"
                 search_input_grupos.clear()
                 search_input_grupos.send_keys("admin")
+                
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade II")
 
                 # espera a opção aparecer visível
                 item_grupo = WebDriverWait(navegador, 10).until(
