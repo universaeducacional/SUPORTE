@@ -301,30 +301,16 @@ if submit:
                     raise Exception("Campo de busca do Select2 (Grupo) não encontrado!")
 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade")
-                
-                html = navegador.page_source
-                print("select2-input" in html, "select2-search__field" in html)
-                
-                print("Tag:", search_input_grupos.tag_name)
-                print("Classes:", search_input_grupos.get_attribute("class"))
-                print("Display:", search_input_grupos.is_displayed())
-                print("Enabled:", search_input_grupos.is_enabled())                
-                
-
+                    
+        
                 # digita "admin"
                 search_input_grupos.clear()
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade II")
                 search_input_grupos.send_keys("admin")
                 time.sleep(0.5)
                 
-                html = navegador.page_source
-                print("select2-input" in html, "select2-search__field" in html)
                 
-                print("Tag:", search_input_grupos.tag_name)
-                print("Classes:", search_input_grupos.get_attribute("class"))
-                print("Display:", search_input_grupos.is_displayed())
-                print("Enabled:", search_input_grupos.is_enabled())
-                
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade II")
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade III")
 
                 # espera a opção aparecer visível
                 item_grupo = WebDriverWait(navegador, 10).until(
