@@ -277,6 +277,8 @@ if submit:
                 # Clica via JavaScript (ignora overlays)
                 item.click()
                 time.sleep(0.5)
+                
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status II")
 
                 # --- Seleciona Grupo (Select2) ---
                 selecao_grupos = wait.until(EC.element_to_be_clickable((By.ID, "s2id_grupos")))
