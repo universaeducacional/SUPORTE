@@ -262,50 +262,17 @@ if submit:
 
                 from selenium.webdriver.common.action_chains import ActionChains
 
-                # Seleciona Status (Select2)
+                # Seleciona Status (Select2 sem campo de busca)
                 selecao_status = wait.until(EC.element_to_be_clickable((By.ID, "s2id_status")))
                 selecao_status.click()
                 time.sleep(0.5)
+                
+                # Aguarda o dropdown abrir
                 wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".select2-drop-active")))
                 
-                # Depuração: lista todos os inputs visíveis
-                inputs = navegador.find_elements(By.TAG_NAME, "input")
-                for inp in inputs:
-                    print("Input:", inp.get_attribute("outerHTML"))
-                
-                # Tente encontrar o campo de busca pelo nome, id ou classe
-                try:
-                    search_input = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "input.select2-input")))
-                except:
-                    try:
-                        search_input = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "input.select2-search__field")))
-                    except:
-                        st.error("Campo de busca do Select2 (Status) não encontrado! Veja os inputs acima no log.")
-                        raise
-                    
-                search_input.clear()
-                search_input.send_keys("Ativo")
-                time.sleep(0.5)
-
-                # Tenta todos os seletores possíveis para o item do Status
-                item = None
-                for xpath in [
-                    "//div[contains(@class,'select2-result-label') and text()='Ativo']",
-                    "//li[contains(@class,'select2-results__option') and text()='Ativo']",
-                    "//ul/li[.//text()[normalize-space()='Ativo']]",
-                    "//li[normalize-space()='Ativo']"
-                ]:
-                    try:
-                        item = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
-                        break
-                    except:
-                        continue
-                    
-                if not item:
-                    raise Exception("Item 'Ativo' do Select2 (Status) não encontrado!")
-
+                # Clica diretamente no item "Ativo"
+                item = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")))
                 item.click()
-                navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
                 time.sleep(0.5)
 
                 # --- Seleciona Grupo (Select2) ---
