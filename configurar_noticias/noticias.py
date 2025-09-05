@@ -260,17 +260,20 @@ if submit:
             
                 from selenium.webdriver.common.action_chains import ActionChains
 
-                # Seleciona Status (Select2)
+                from selenium.webdriver.common.action_chains import ActionChains
+
+                # --- Seleciona Status (Select2) ---
                 selecao_status = wait.until(EC.element_to_be_clickable((By.ID, "s2id_status")))
                 ActionChains(navegador).move_to_element(selecao_status).click().perform()
                 time.sleep(0.5)
                 
-                # Tenta todos os seletores possíveis para o campo de busca
+                # Tenta todos os seletores possíveis para o campo de busca do Status
                 search_input = None
-                for selector in [".select2-input", ".select2-search__field", "ul.select2-results li input"]:
+                for selector in [".select2-input", ".select2-search__field", "ul.select2-results li input", "input.select2-input"]:
                     try:
                         search_input = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
-                        break
+                        if search_input.is_displayed() and search_input.is_enabled():
+                            break
                     except:
                         continue
                     
@@ -281,12 +284,13 @@ if submit:
                 search_input.send_keys("Ativo")
                 time.sleep(0.5)
                 
-                # Tenta todos os seletores possíveis para o item
+                # Tenta todos os seletores possíveis para o item do Status
                 item = None
                 for xpath in [
                     "//div[contains(@class,'select2-result-label') and text()='Ativo']",
                     "//li[contains(@class,'select2-results__option') and text()='Ativo']",
-                    "//ul/li[.//text()[normalize-space()='Ativo']]"
+                    "//ul/li[.//text()[normalize-space()='Ativo']]",
+                    "//li[normalize-space()='Ativo']"
                 ]:
                     try:
                         item = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
@@ -301,16 +305,17 @@ if submit:
                 navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
                 time.sleep(0.5)
                 
-                # Seleciona Grupo (Select2)
+                # --- Seleciona Grupo (Select2) ---
                 selecao_grupos = wait.until(EC.element_to_be_clickable((By.ID, "s2id_grupos")))
                 ActionChains(navegador).move_to_element(selecao_grupos).click().perform()
                 time.sleep(0.5)
                 
                 search_input_grupos = None
-                for selector in [".select2-input", ".select2-search__field", "ul.select2-results li input"]:
+                for selector in [".select2-input", ".select2-search__field", "ul.select2-results li input", "input.select2-input"]:
                     try:
                         search_input_grupos = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
-                        break
+                        if search_input_grupos.is_displayed() and search_input_grupos.is_enabled():
+                            break
                     except:
                         continue
                     
@@ -325,7 +330,8 @@ if submit:
                 for xpath in [
                     "//div[contains(@class,'select2-result-label') and text()='admin']",
                     "//li[contains(@class,'select2-results__option') and text()='admin']",
-                    "//ul/li[.//text()[normalize-space()='admin']]"
+                    "//ul/li[.//text()[normalize-space()='admin']]",
+                    "//li[normalize-space()='admin']"
                 ]:
                     try:
                         item_grupo = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
@@ -339,15 +345,15 @@ if submit:
                 item_grupo.click()
                 navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
                 time.sleep(0.5)
-
+                
                 # Clique em salvar
                 salvar = wait.until(EC.element_to_be_clickable((By.ID, "salvar-gerenciamento-noticia")))
                 salvar.click()
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em salvar")
-
+                
                 st.success("Notícia criada com sucesso!")
-
-# ...existing code...
+            
+            # ...existing code...
             
             except Exception as e:
                 st.error(f"Erro no fluxo de criação da notícia: {e}")
