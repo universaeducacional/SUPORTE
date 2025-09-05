@@ -287,13 +287,6 @@ if submit:
                 selecao_grupos = wait.until(EC.element_to_be_clickable((By.ID, "s2id_grupos")))
                 ActionChains(navegador).move_to_element(selecao_grupos).click().perform()
                 time.sleep(0.5)
-                
-                html = navegador.page_source
-                print("select2-input" in html, "select2-search__field" in html)
-                print("Tag:", search_input_grupos.tag_name)
-                print("Classes:", search_input_grupos.get_attribute("class"))
-                print("Display:", search_input_grupos.is_displayed())
-                print("Enabled:", search_input_grupos.is_enabled())
 
                 search_input_grupos = None
                 for selector in [".select2-input.select2-default", ".select2-search__field", "ul.select2-results li input", "input.select2-input"]:
@@ -311,6 +304,7 @@ if submit:
                 
                 html = navegador.page_source
                 print("select2-input" in html, "select2-search__field" in html)
+                
                 print("Tag:", search_input_grupos.tag_name)
                 print("Classes:", search_input_grupos.get_attribute("class"))
                 print("Display:", search_input_grupos.is_displayed())
