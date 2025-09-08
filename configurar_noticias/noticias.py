@@ -293,13 +293,13 @@ if submit:
                 )
 
                 # clica no item pelo texto
-                item = navegador.find_element(By.XPATH, "//ul/li[.//text()[normalize-space()='admin']]")
+                item = navegador.find_element(By.XPATH, "//ul/li[.//text()[normalize-space()='Home -Noticias']]")
                 navegador.execute_script("arguments[0].click();", item)
                 #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade AAII")
 
                 
                 campo = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#s2id_grupos input.select2-input")))
-                campo.send_keys("admin")
+                campo.send_keys("Home -Noticias")
                 campo.send_keys(Keys.ENTER)
                 #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade III")
 
