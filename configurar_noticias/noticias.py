@@ -277,9 +277,14 @@ if submit:
 
                 # agora clica no select2
                 elem = wait.until(
-                    EC.element_to_be_clickable((By.CSS_SELECTOR, "#s2id_grupos a.select2-choice"))
+                    EC.element_to_be_clickable((By.CSS_SELECTOR, "#s2id_grupos"))
                 )
                 navegador.execute_script("arguments[0].click();", elem)
+                
+                # entra na div que esta o campo de grupos
+                camp = wait.until(
+                    EC.visibility_of_element_located((By.CSS_SELECTOR,"div.select2-container.select2-container-multi.form-control.select2-dropdown-open"))
+                )
                 
                 # achar o campo grupos
                 #seletor = navegador.find_element(
@@ -289,12 +294,10 @@ if submit:
                 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade I")
                 
-                # abre o dropdown primeiro
-                navegador.execute_script("arguments[0].click();",
-                    navegador.find_element(By.CSS_SELECTOR, "#s2id_grupos a.select2-choice"))
-
-                # espera a lista carregar
-                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".select2-drop-active")))
+                # delimita quais campos e a sequência que existe dentro da div
+                search_input = camp.find_element(
+                    By.CSS_SELECTOR,"ul li input"
+                )
 
                 # clica no item pelo texto
                 item = navegador.find_element(By.XPATH, "//ul/li[.//text()[normalize-space()='admin']]")
