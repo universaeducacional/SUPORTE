@@ -26,10 +26,10 @@ st.title("Portal de acesso automático")
 with st.form("login_form"):
     usuario = st.text_input("Usuário")
     senha = st.text_input("Senha", type="password")
-    TITULO = st.text_input("Título da Notícia", value="Título de Teste")
-    HTML = st.text_area("Conteúdo HTML", value="<p>Conteúdo de teste</p>")
-    DATA_INICIO = st.text_input("Data Início (DD/MM/AAAA)", value="01/01/2025")
-    DATA_FIM = st.text_input("Data Fim (DD/MM/AAAA)", value="31/12/2025")
+    TITULO = st.text_input("Título da Notícia")
+    HTML = st.text_area("Conteúdo HTML")
+    DATA_INICIO = st.text_input("Data Início (DD/MM/AAAA)")
+    DATA_FIM = st.text_input("Data Fim (DD/MM/AAAA)")
     submit = st.form_submit_button("Prosseguir")
 
 
