@@ -52,19 +52,6 @@ json_path = os.path.join(base_path, 'urls.json')
             
 if submit:
     st.success("Rodando Selenium headless no servidor...")
-
-    # Inicializa Selenium headless
-    options = uc.ChromeOptions()
-    options.add_argument("--headless=chrome")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.binary_location = "/usr/bin/chromium"
-    
-    # força o uc a usar a versão exata do Chromium no container
-    navegador = uc.Chrome(
-        version_main=120,  # versão do Chromium do Streamlit Cloud
-        options=options
-    )
     
    # navegador = uc.Chrome(options=options)
     wait = WebDriverWait(navegador, 10)
@@ -89,6 +76,19 @@ if submit:
 
     for url in urls:
         st.write(f"🔗 {url}")
+        # Inicializa Selenium headless
+        options = uc.ChromeOptions()
+        options.add_argument("--headless=chrome")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        options.binary_location = "/usr/bin/chromium"
+        
+        # força o uc a usar a versão exata do Chromium no container
+        navegador = uc.Chrome(
+            version_main=120,  # versão do Chromium do Streamlit Cloud
+            options=options
+        )
+    
         navegador.get(url)
 
         # Espera body carregar
@@ -306,9 +306,6 @@ if submit:
 
                 st.success("Notícia criada com sucesso!")
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Notícia")
-                
-
-            
             except Exception as e:
                 st.error(f"Erro no fluxo de criação da notícia: {e}")
                 
