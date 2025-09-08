@@ -35,7 +35,7 @@ with st.form("login_form"):
 
 
 # localicar o caminho do .env para preenchimento dos dados necessários para a configuração
-load_dotenv(dotenv_path="./load_dotenv(dotenv_path=./configurar_noticias/dados_formulario.env")
+#load_dotenv(dotenv_path="./load_dotenv(dotenv_path=./configurar_noticias/dados_formulario.env")
 
 # valores das variáveis
 #TITULO = os.getenv("TITULO") 
@@ -143,10 +143,10 @@ if submit:
             pesquisar.send_keys("Gerenciamento de Notícias")
                 
             # Screenshot após pesquisa
-            screenshot_pesquisa = navegador.get_screenshot_as_png()
-            image_pesquisa = Image.open(io.BytesIO(screenshot_pesquisa))
-            st.image(image_pesquisa, caption=f"Screenshot após pesquisa em {url}", use_container_width=True)
-            st.write("Título após pesquisa:", navegador.title)
+            #screenshot_pesquisa = navegador.get_screenshot_as_png()
+            #image_pesquisa = Image.open(io.BytesIO(screenshot_pesquisa))
+            #st.image(image_pesquisa, caption=f"Screenshot após pesquisa em {url}", use_container_width=True)
+            #st.write("Título após pesquisa:", navegador.title)
 
 
             # clicar na barra de pesquisar menu
@@ -154,10 +154,10 @@ if submit:
             pesquisar.send_keys("Gerenciamento de Notícias")
           
             # Screenshot antes do clique no menu
-            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
+            #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
 
 
-            st.info("Buscando menu 'Gerenciamento de Notícias'...")
+            #st.info("Buscando menu 'Gerenciamento de Notícias'...")
             
             # Busca o elemento mesmo oculto
             opcao = WebDriverWait(navegador, 10).until(
@@ -172,13 +172,13 @@ if submit:
             navegador.execute_script("arguments[0].click();", opcao)
                 
             
-            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
+            #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
             
             # Screenshot após acessar o menu Gerenciamento de Notícias
-            screenshot_menu = navegador.get_screenshot_as_png()
-            image_menu = Image.open(io.BytesIO(screenshot_menu))
-            st.image(image_menu, caption=f"Screenshot após acessar menu em {url}", use_container_width=True)
-            st.write("Título após acessar menu:", navegador.title)
+            #screenshot_menu = navegador.get_screenshot_as_png()
+            #image_menu = Image.open(io.BytesIO(screenshot_menu))
+            #st.image(image_menu, caption=f"Screenshot após acessar menu em {url}", use_container_width=True)
+            #st.write("Título após acessar menu:", navegador.title)
             
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
@@ -193,9 +193,9 @@ if submit:
                 adicionar.click()
                 st.info("Clique em 'Adicionar' realizado.")
                 # Screenshot após clicar em Adicionar
-                screenshot_modal = navegador.get_screenshot_as_png()
-                image_modal = Image.open(io.BytesIO(screenshot_modal))
-                st.image(image_modal, caption="Screenshot após clicar em Adicionar")
+                #screenshot_modal = navegador.get_screenshot_as_png()
+                #image_modal = Image.open(io.BytesIO(screenshot_modal))
+                #st.image(image_modal, caption="Screenshot após clicar em Adicionar")
                 # Exibe HTML do modal (se existir)
                 try:
                     modal = wait.until(EC.presence_of_element_located((By.ID, "modalNoticia")))
@@ -209,49 +209,49 @@ if submit:
                 titulo = wait.until(EC.element_to_be_clickable((By.ID, "titulo")))
                 titulo.clear()
                 titulo.send_keys(TITULO)
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
             
                 # Ativa modo código do editor
                 botao_codeview = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
                 botao_codeview.click()
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após ativar codeview")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após ativar codeview")
             
                 # Preenche conteúdo HTML
                 codable = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "textarea.note-codable")))
                 navegador.execute_script("arguments[0].value = arguments[1];", codable, HTML)
                 navegador.execute_script("arguments[0].dispatchEvent(new Event('input', {bubbles:true}));", codable)
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher conteúdo")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher conteúdo")
                 
                 # ...após preencher conteúdo HTML...
                 # Fecha o modo código (volta ao modo visual)
                 botao_codeview = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
                 botao_codeview.click()
                 time.sleep(0.5)
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após fechar codeview")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após fechar codeview")
             
                 # Preenche Data Inicial
                 data_inicio = wait.until(EC.element_to_be_clickable((By.ID, "dataInicio")))
                 data_inicio.clear()
                 data_inicio.send_keys(DATA_INICIO)
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data início")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data início")
             
                 # Preenche Data Final
                 data_fim = wait.until(EC.element_to_be_clickable((By.ID, "dataFim")))
                 data_fim.clear()
                 data_fim.send_keys(DATA_FIM)
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data fim")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data fim")
             
                 # Preenche Prioridade
                 prioridade = wait.until(EC.element_to_be_clickable((By.ID, "prioridade")))
                 prioridade.clear()
                 prioridade.send_keys("1")
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
 
                 # Seleciona Status (Select2 sem campo de busca)
                 selecao_status = wait.until(EC.element_to_be_clickable((By.ID, "s2id_status")))
                 selecao_status.click()
                 time.sleep(0.5)
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status")
 
                 # Aguarda o dropdown abrir
                 wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".select2-drop-active")))
@@ -266,7 +266,7 @@ if submit:
                 time.sleep(0.5)
 
                 
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status II")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status II")
 
                 # --- Seleciona Grupo (Select2) ---
                 ## achar o campo grupos
@@ -275,7 +275,7 @@ if submit:
                 )
                 seletor.click()
                 
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade I")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade I")
 
                 # entra na div que esta o campo de grupos
                 camp = wait.until(
@@ -297,14 +297,16 @@ if submit:
                 )))
                 item.click()
                 
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade III")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade III")
 
                 # Clique em salvar
                 salvar = wait.until(EC.element_to_be_clickable((By.ID, "salvar-gerenciamento-noticia")))
                 salvar.click()
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em salvar")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em salvar")
 
                 st.success("Notícia criada com sucesso!")
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Notícia")
+                
 
             
             except Exception as e:
