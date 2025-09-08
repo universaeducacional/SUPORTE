@@ -297,7 +297,7 @@ if submit:
                 wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".select2-drop-active")))
 
                 # clica no item pelo texto
-                item = navegador.find_element(By.XPATH, "//div[contains(@class,'select2-result-label') and text()='admin']")
+                item = navegador.find_element(By.XPATH, "//ul/li[.//text()[normalize-space()='admin']]")
                 navegador.execute_script("arguments[0].click();", item)
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade AAII")
 
