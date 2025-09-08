@@ -209,31 +209,31 @@ if submit:
                 titulo = wait.until(EC.element_to_be_clickable((By.ID, "titulo")))
                 titulo.clear()
                 titulo.send_keys(TITULO)
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
             
                 # Ativa modo código do editor
                 botao_codeview = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
                 botao_codeview.click()
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após ativar codeview")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após ativar codeview")
             
                 # Preenche conteúdo HTML
                 codable = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "textarea.note-codable")))
                 navegador.execute_script("arguments[0].value = arguments[1];", codable, HTML)
                 navegador.execute_script("arguments[0].dispatchEvent(new Event('input', {bubbles:true}));", codable)
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher conteúdo")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher conteúdo")
                 
                 # ...após preencher conteúdo HTML...
                 # Fecha o modo código (volta ao modo visual)
                 botao_codeview = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
                 botao_codeview.click()
                 time.sleep(0.5)
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após fechar codeview")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após fechar codeview")
             
                 # Preenche Data Inicial
                 data_inicio = wait.until(EC.element_to_be_clickable((By.ID, "dataInicio")))
                 data_inicio.clear()
                 data_inicio.send_keys(DATA_INICIO)
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data início")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data início")
             
                 # Preenche Data Final
                 data_fim = wait.until(EC.element_to_be_clickable((By.ID, "dataFim")))
@@ -245,7 +245,7 @@ if submit:
                 prioridade = wait.until(EC.element_to_be_clickable((By.ID, "prioridade")))
                 prioridade.clear()
                 prioridade.send_keys("1")
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
 
                 # Seleciona Status (Select2 sem campo de busca)
                 # abrir seleção de status
@@ -297,9 +297,9 @@ if submit:
                 wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".select2-drop-active")))
 
                 # clica no item pelo texto
-                item = navegador.find_element(By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Nome do Grupo']")
+                item = navegador.find_element(By.XPATH, "//div[contains(@class,'select2-result-label') and text()='admin']")
                 navegador.execute_script("arguments[0].click();", item)
-
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade AAII")
 
                 # entra na div que esta o campo de grupos
                 #camp = wait.until(
