@@ -248,21 +248,25 @@ if submit:
                 #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
 
                 # Seleciona Status (Select2 sem campo de busca)
-                selecao_status = wait.until(EC.element_to_be_clickable((By.ID, "s2id_status")))
-                selecao_status.click()
+                selecao_status = wait.until(
+                    EC.element_to_be_clickable((By.CSS_SELECTOR, "#s2id_status a.select2-choice"))
+                )
+                
+                # clica via JS para ignorar overlay
+                navegador.execute_script("arguments[0].click();", selecao_status)
                 time.sleep(0.5)
-                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status")
-
+                
                 # Aguarda o dropdown abrir
                 wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".select2-drop-active")))
-
                 
                 # Localiza o item "Ativo"
-                item = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")))
-
-
-                # Clica via JavaScript (ignora overlays)
-                item.click()
+                item = wait.until(
+                    EC.element_to_be_clickable(
+                        (By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")
+                    )
+                )
+                
+                navegador.execute_script("arguments[0].click();", item)
                 time.sleep(0.5)
 
                 
