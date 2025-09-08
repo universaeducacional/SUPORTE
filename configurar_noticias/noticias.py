@@ -285,14 +285,7 @@ if submit:
                 camp = wait.until(
                     EC.visibility_of_element_located((By.CSS_SELECTOR,"div.select2-container.select2-container-multi.form-control.select2-dropdown-open"))
                 )
-                
-                # achar o campo grupos
-                #seletor = navegador.find_element(
-                #    By.ID,"s2id_grupos"
-                #)
-                #seletor.click()
-                
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade I")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade I")
                 
                 # delimita quais campos e a sequência que existe dentro da div
                 search_input = camp.find_element(
@@ -302,39 +295,18 @@ if submit:
                 # clica no item pelo texto
                 item = navegador.find_element(By.XPATH, "//ul/li[.//text()[normalize-space()='admin']]")
                 navegador.execute_script("arguments[0].click();", item)
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade AAII")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade AAII")
 
-                # entra na div que esta o campo de grupos
-                #camp = wait.until(
-                #    EC.visibility_of_element_located((By.CSS_SELECTOR,"div.select2-container.select2-container-multi.form-control.select2-dropdown-open"))
-                #)
-#
-                ## delimita quais campos e a sequência que existe dentro da div
-                #search_input = camp.find_element(
-                #    By.CSS_SELECTOR,"ul li input"
-                #)
-
-                #digita o valor da busca
-                #search_input.send_keys("admin")
-
-                # esoera o li aparecer e seleciona o nome do grupo
-                #item = wait.until(EC.element_to_be_clickable((
-                #    By.XPATH,
-                #    "//ul/li[.//text()[normalize-space()='admin']]"
-                #)))
-                #item.click()
                 
                 campo = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#s2id_grupos input.select2-input")))
                 campo.send_keys("admin")
                 campo.send_keys(Keys.ENTER)
-
-                
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade III")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade III")
 
                 # Clique em salvar
                 salvar = wait.until(EC.element_to_be_clickable((By.ID, "salvar-gerenciamento-noticia")))
                 salvar.click()
-                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em salvar")
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em salvar")
 
                 st.success("Notícia criada com sucesso!")
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Notícia")
