@@ -26,7 +26,11 @@ st.title("Portal de acesso automático")
 with st.form("login_form"):
     usuario = st.text_input("Usuário")
     senha = st.text_input("Senha", type="password")
-    submit = st.form_submit_button("Abrir páginas no Chrome")
+    TITULO = st.text_input("Título da Notícia", value="Título de Teste")
+    HTML = st.text_area("Conteúdo HTML", value="<p>Conteúdo de teste</p>")
+    DATA_INICIO = st.text_input("Data Início (DD/MM/AAAA)", value="01/01/2025")
+    DATA_FIM = st.text_input("Data Fim (DD/MM/AAAA)", value="31/12/2025")
+    submit = st.form_submit_button("Prosseguir")
 
 
 
@@ -34,10 +38,10 @@ with st.form("login_form"):
 load_dotenv(dotenv_path="./load_dotenv(dotenv_path=./configurar_noticias/dados_formulario.env")
 
 # valores das variáveis
-TITULO = os.getenv("TITULO") 
-HTML = os.getenv("HTML")
-DATA_INICIO = os.getenv("DATA_INICIO")
-DATA_FIM = os.getenv("DATA_FIM")
+#TITULO = os.getenv("TITULO") 
+#HTML = os.getenv("HTML")
+#DATA_INICIO = os.getenv("DATA_INICIO")
+#DATA_FIM = os.getenv("DATA_FIM")
 
 
 
@@ -104,12 +108,6 @@ if submit:
 
     
         try: 
-
-
-            # Ajusta o seletor para algo que aparece quando a página tá pronta
-           # elemento = wait.until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
-           # print(f"Página carregada em {url}!")
-
             # Espera até o input de usuário aparecer
             usuario_input = wait.until(EC.element_to_be_clickable((By.NAME, "username")))
             senha_input = wait.until(EC.element_to_be_clickable((By.ID, "senha")))
@@ -128,19 +126,17 @@ if submit:
             image_login = Image.open(io.BytesIO(screenshot_login))
             st.image(image_login, caption=f"Screenshot após login em {url}", use_container_width=True)
             st.write("Título após login:", navegador.title)
-            # ...existing code...
+
 
             # Salva no session_state
             st.session_state["usuario"] = usuario
             st.session_state["senha"] = senha
-            # ...existing code...
-            
+
             st.success(f"Login automático feito em {url}! 🚀")
             
             
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
-            
             
             
             pesquisar = wait.until(EC.presence_of_element_located((By.ID,"pesMenu")))
@@ -177,7 +173,6 @@ if submit:
                 
             
             st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
-            # ...existing code...
             
             # Screenshot após acessar o menu Gerenciamento de Notícias
             screenshot_menu = navegador.get_screenshot_as_png()
@@ -187,9 +182,6 @@ if submit:
             
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
-            
-            # Espera até o botão estar clicável
-            # ...existing code...
 
             # Espera até o botão estar clicável
             adicionar = wait.until(EC.element_to_be_clickable((By.ID, "btn-sis-gerenciamento-noticias-add")))
@@ -210,16 +202,13 @@ if submit:
                 except Exception as e:
                     st.warning("Modal não encontrado após clicar em Adicionar.")
                     st.error(str(e))
-
-            # ...continue o fluxo normalmente...
-            
-            # ...existing code...
+                    
 
             try:
                 # Preenche título
                 titulo = wait.until(EC.element_to_be_clickable((By.ID, "titulo")))
                 titulo.clear()
-                titulo.send_keys(TITULO or "Título de Teste")
+                titulo.send_keys(TITULO)
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
             
                 # Ativa modo código do editor
@@ -229,7 +218,7 @@ if submit:
             
                 # Preenche conteúdo HTML
                 codable = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "textarea.note-codable")))
-                navegador.execute_script("arguments[0].value = arguments[1];", codable, HTML or "<p>Conteúdo de teste</p>")
+                navegador.execute_script("arguments[0].value = arguments[1];", codable, HTML)
                 navegador.execute_script("arguments[0].dispatchEvent(new Event('input', {bubbles:true}));", codable)
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher conteúdo")
                 
@@ -243,13 +232,13 @@ if submit:
                 # Preenche Data Inicial
                 data_inicio = wait.until(EC.element_to_be_clickable((By.ID, "dataInicio")))
                 data_inicio.clear()
-                data_inicio.send_keys(DATA_INICIO or "01/01/2025")
+                data_inicio.send_keys(DATA_INICIO)
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data início")
             
                 # Preenche Data Final
                 data_fim = wait.until(EC.element_to_be_clickable((By.ID, "dataFim")))
                 data_fim.clear()
-                data_fim.send_keys(DATA_FIM or "31/12/2025")
+                data_fim.send_keys(DATA_FIM)
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data fim")
             
                 # Preenche Prioridade
@@ -257,10 +246,6 @@ if submit:
                 prioridade.clear()
                 prioridade.send_keys("1")
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
-            
-                from selenium.webdriver.common.action_chains import ActionChains
-
-                from selenium.webdriver.common.action_chains import ActionChains
 
                 # Seleciona Status (Select2 sem campo de busca)
                 selecao_status = wait.until(EC.element_to_be_clickable((By.ID, "s2id_status")))
@@ -320,239 +305,11 @@ if submit:
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em salvar")
 
                 st.success("Notícia criada com sucesso!")
-            
-            # ...existing code...
+
             
             except Exception as e:
                 st.error(f"Erro no fluxo de criação da notícia: {e}")
-
-# ...existing code...
-
-    #        # Preenche título
-    #        try:
-    #            titulo = wait.until(EC.element_to_be_clickable((By.ID, "titulo")))
-    #            if titulo is None:
-    #                st.error("Campo título não encontrado!")
-    #            else:
-    #                st.success("Campo título encontrado.")
-    #                titulo.clear()
-    #                titulo.send_keys(TITULO)
-    #                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
-    #        except Exception as e:
-    #            st.error(f"Erro ao preencher título: {e}")
-#
-    #        # Ativa modo código do editor
-    #        try:
-    #            botao_codeview = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
-    #            botao_codeview.click()
-    #            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após ativar codeview")
-    #        except Exception as e:
-    #            st.error(f"Erro ao ativar codeview: {e}")
-#
-    #        try:
-    #            titulo = wait.until(EC.element_to_be_clickable((By.ID, "titulo")))
-    #            st.success("Campo título encontrado.")
-    #            titulo.clear()
-    #            titulo.send_keys(TITULO)
-    #            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher título")
-    #        except Exception as e:
-    #            st.error(f"Erro ao preencher título: {e}")
-#
-    #        try:
-    #            botao_codeview = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
-    #            botao_codeview.click()
-    #            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após ativar codeview")
-    #        except Exception as e:
-    #            st.error(f"Erro ao ativar codeview: {e}")
-#
-    #        try:
-    #            codable = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "textarea.note-codable")))
-    #            navegador.execute_script("arguments[0].value = arguments[1];", codable, HTML)
-    #            navegador.execute_script("arguments[0].dispatchEvent(new Event('input', {bubbles:true}));", codable)
-    #            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher conteúdo")
-    #        except Exception as e:
-    #            st.error(f"Erro ao preencher conteúdo: {e}")
-#
-    #        # Preenche Data Inicial
-    #        try:
-    #            data_inicio = wait.until(EC.element_to_be_clickable((By.ID, "dataInicio")))
-    #            data_inicio.clear()
-    #            data_inicio.send_keys(DATA_INICIO or "01/01/2025")
-    #            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data início")
-    #        except Exception as e:
-    #            st.error(f"Erro ao preencher data início: {e}")
-#
-    #        # Preenche Data Final
-    #        try:
-    #            data_fim = wait.until(EC.element_to_be_clickable((By.ID, "dataFim")))
-    #            data_fim.clear()
-    #            data_fim.send_keys(DATA_FIM or "31/12/2025")
-    #            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data fim")
-    #        except Exception as e:
-    #            st.error(f"Erro ao preencher data fim: {e}")
-#
-    #        # Preenche Prioridade
-    #        try:
-    #            prioridade = wait.until(EC.element_to_be_clickable((By.ID, "prioridade")))
-    #            prioridade.clear()
-    #            prioridade.send_keys("1")
-    #            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
-    #        except Exception as e:
-    #            st.error(f"Erro ao preencher prioridade: {e}")
-#
-    #        # Seleciona Status (Select2)
-    #        try:
-    #            selecao_status = wait.until(EC.element_to_be_clickable((By.ID, "s2id_status")))
-    #            selecao_status.click()
-    #            search_input = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".select2-input")))
-    #            search_input.send_keys("Ativo")
-    #            item = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Ativo']")))
-    #            item.click()
-    #            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após selecionar status")
-    #        except Exception as e:
-    #            st.error(f"Erro ao selecionar status: {e}")
-#
-    #        # Seleciona Grupo (Select2)
-    #        try:
-    #            selecao_grupos = wait.until(EC.element_to_be_clickable((By.ID, "s2id_grupos")))
-    #            selecao_grupos.click()
-    #            search_input_grupos = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".select2-input")))
-    #            search_input_grupos.send_keys("admin")
-    #            item_grupo = wait.until(EC.element_to_be_clickable((By.XPATH, "//div[contains(@class,'select2-result-label') and text()='admin']")))
-    #            item_grupo.click()
-    #            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após selecionar grupo")
-    #        except Exception as e:
-    #            st.error(f"Erro ao selecionar grupo: {e}")
-#
-    #        # Continue assim para status, grupos e salvar...
-    #        
-    #        # Clique em salvar
-    #        salvar = wait.until(EC.element_to_be_clickable((By.ID, "salvar-gerenciamento-noticia")))
-    #        salvar.click()
-    #        st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em salvar")
-
-
-            # adicionar título
-            #titulo = WebDriverWait(navegador, 2).until(
-            #    EC.element_to_be_clickable((By.ID,"titulo"))
-            #)
-            #titulo.clear()
-            #titulo.send_keys(TITULO)
-            
-            # abrir o contêiner dos botões
-            #container = wait.until(
-            #    EC.visibility_of_element_located(
-            #        (By.CSS_SELECTOR, "div.note-btn-group.btn-group.note-view")
-            #    )
-            #)
-            ## localiza o botão desejado
-            #botao_codeview = wait.until(
-            #    EC.presence_of_element_located((By.CSS_SELECTOR, "button.note-btn.btn.btn-default.btn-sm.btn-codeview"))
-            #)   
-            #
-            ## aguarda carregar o botão e clica nele
-            #wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
-            #botao_codeview.click()
-            #
-            ## espera até a classe "active" aparecer
-            #wait.until(lambda d: "active" in botao_codeview.get_attribute("class"))
-            #
-            ## abrir o contêiner do editor de texto
-            #area = wait.until(
-            #    EC.visibility_of_element_located((By.CSS_SELECTOR, ".note-editing-area"))
-            #)
-            #
-            ##acha a textarea.note-codable
-            #codable = wait.until(
-            #    EC.presence_of_element_located((By.CSS_SELECTOR, "textarea.note-codable"))
-            #)
-            #html_content = HTML
-            #
-            ## injeta o HTML no atributo value
-            #navegador.execute_script(
-            #    "arguments[0].value = arguments[1];", codable, html_content
-            #)
-            #
-            ## dispara evento 'input' → editor percebe que mudou
-            #navegador.execute_script(
-            #    "arguments[0].dispatchEvent(new Event('input', {bubbles:true}));",
-            #    codable
-            #)
-            #
-            ## se o site salva ao perder foco, você pode dar um 'blur':
-            #navegador.execute_script("arguments[0].blur();", codable)
-            #
-            ## fechar o contêiner dos botões
-            #container = wait.until(
-            #    EC.visibility_of_element_located(
-            #        (By.CSS_SELECTOR, "div.note-btn-group.btn-group.note-view")
-            #    )
-            #)
-            ## localiza o botão desejado
-            #botao_codeview = container.presence_of_element_located(
-            #    By.CSS_SELECTOR,
-            #    "button.note-btn.btn.btn-default.btn-sm.btn-codeview"
-            #)
-            ## aguarda carregar o botão e clica nele
-            #wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.note-btn.btn-codeview")))
-            #botao_codeview.click()
-            ## preencher data de inicio e fim
-            #def preencher_data_com_foco(campo_id, valor):
-            #    campo = wait.until(EC.element_to_be_clickable((By.ID, campo_id)))
-            #    campo.clear()
-            #    campo.send_keys(valor)
-            #    # clique fora para perder foco e fechar pop-up
-            #    try:
-            #        elemento_fora = wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-            #        ActionChains(navegador).move_to_element(elemento_fora).click().perform()
-            #    except Exception as e:
-            #        print("⚠️ Erro ao clicar fora (ignorado):", e)
-            ## ---- uso real ----
-            #preencher_data_com_foco("dataInicio", DATA_INICIO)
-            #preencher_data_com_foco("dataFim",  DATA_FIM)
-            ## adicionar prioridade
-            #prioridade = wait.until(EC.presence_of_element_located
-            #    (By.ID, "prioridade")
-            #)
-            #prioridade.send_keys("1")
-            ## abrir seleção de status
-            #selecao = wait.until(EC.presence_of_element_located(
-            #    (By.ID,
-            #    "s2id_status"))
-            #)
-            #selecao.click()
-            ## clicar na situação
-            #select = wait.until(
-            #    EC.element_to_be_clickable((By.XPATH,"//ul[contains(@class,'select2-results')]//div[normalize-space()='Ativo']"))
-            #)
-            #select.click()
-            ## achar o campo grupos
-            #seletor = wait.until(EC.presence_of_element_located(
-            #    (By.ID,"s2id_grupos"))
-            #)
-            #seletor.click()
-            ## entra na div que esta o campo de grupos
-            #camp = wait.until(
-            #    EC.visibility_of_element_located((By.CSS_SELECTOR,"div.select2-container.select2-container-multi.form-control.select2-dropdown-open"))
-            #)
-            ## delimita quais campos e a sequência que existe dentro da div
-            #search_input = wait.until(
-            #    EC.presence_of_element_located((By.CSS_SELECTOR,"ul li input"))
-            #)
-            ##digita o valor da busca
-            #search_input.send_keys("admin")
-            ## esoera o li aparecer e seleciona o nome do grupo
-            #item = wait.until(EC.element_to_be_clickable((
-            #    By.XPATH,
-            #    "//ul/li[.//text()[normalize-space()='admin']]"
-            #)))
-            #item.click()
-            ## seleciona o botão salvar
-            #salvar = wait.until(EC.presence_of_element_located(
-            #    (By.ID, "salvar-gerenciamento-noticia"))
-            #)
-            #salvar.click()
-            # espera até 3 segundos para os elementos aparecerem
+                
             time.sleep(3)
             
         except Exception as e:
