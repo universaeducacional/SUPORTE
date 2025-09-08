@@ -284,36 +284,46 @@ if submit:
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status II")
 
                 # --- Seleciona Grupo (Select2) ---
-                selecao_grupos = wait.until(EC.element_to_be_clickable((By.ID, "s2id_grupos")))
-                ActionChains(navegador).move_to_element(selecao_grupos).click().perform()
+                # espera o container do select2 aparecer
+                wait = WebDriverWait(navegador, 10)
+                container = wait.until(EC.element_to_be_clickable((By.ID, "s2id_grupos")))
+                
+                #selecao_grupos = wait.until(EC.element_to_be_clickable((By.ID, "s2id_grupos")))
+                #ActionChains(navegador).move_to_element(selecao_grupos).click().perform()
                 time.sleep(0.5)
+                
+                # clica para abrir
+                container.click()
 
-                search_input_grupos = None
-                for selector in [".select2-input.select2-default", ".select2-search__field", "ul.select2-results li input", "input.select2-input"]:
-                    try:
-                        search_input_grupos = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
-                        if search_input_grupos.is_displayed() and search_input_grupos.is_enabled():
-                            break
-                    except:
-                        continue
-                    
-                if not search_input_grupos:
-                    raise Exception("Campo de busca do Select2 (Grupo) não encontrado!")
+                #search_input_grupos = None
+                #for selector in [".select2-input.select2-default", ".select2-search__field", "ul.select2-results li input", "input.select2-input"]:
+                #    try:
+                #        search_input_grupos = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
+                #        if search_input_grupos.is_displayed() and search_input_grupos.is_enabled():
+                #            break
+                #    except:
+                #        continue
+                #    
+                #if not search_input_grupos:
+                #    raise Exception("Campo de busca do Select2 (Grupo) não encontrado!")
+                
+                # pega o input que aparece
+                input_grupo = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "select2-input")))
 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade")
                     
         
                 # digita "admin"
                 
-                try:
-                    search_input_grupos.click()  # garante foco
-                    search_input_grupos.clear()
-                    search_input_grupos.send_keys("admin")
-                    print("Valor após send_keys:", search_input_grupos.get_attribute("value"))
-                except Exception as e:
-                    print("Erro no send_keys:", e)
-                    # plano B → força via JS
-                    navegador.execute_script("arguments[0].value='admin'; arguments[0].dispatchEvent(new Event('input'));", search_input_grupos)
+                #try:
+                #    search_input_grupos.click()  # garante foco
+                #    search_input_grupos.clear()
+                #    search_input_grupos.send_keys("admin")
+                #    print("Valor após send_keys:", search_input_grupos.get_attribute("value"))
+                #except Exception as e:
+                #    print("Erro no send_keys:", e)
+                #    # plano B → força via JS
+                #    navegador.execute_script("arguments[0].value='admin'; arguments[0].dispatchEvent(new Event('input'));", search_input_grupos)
 
                 #search_input_grupos.clear()
                 #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade II")
@@ -322,14 +332,17 @@ if submit:
                 
                 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade III")
+                
+                # digita o nome do grupo
+                input_grupo.send_keys("admin")
 
                 # espera a opção aparecer visível
-                item_grupo = WebDriverWait(navegador, 10).until(
-                    EC.visibility_of_element_located(
-                        (By.XPATH, "//li[contains(@class,'select2-results__option') and normalize-space(.)='admin']")
-                    )
-                )
-                item_grupo.click()
+                #item_grupo = WebDriverWait(navegador, 10).until(
+                #    EC.visibility_of_element_located(
+                #        (By.XPATH, "//li[contains(@class,'select2-results__option') and normalize-space(.)='admin']")
+                #    )
+                #)
+                #item_grupo.click()
 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade IBB")
                 # clica (se não rolar, força via JS)
@@ -340,8 +353,11 @@ if submit:
 
                 #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade IAAA")
                 # fecha o dropdown (caso não feche sozinho)
-                navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+                #navegador.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
 
+                # espera os resultados e escolhe o primeiro
+                resultado = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "select2-result-label")))
+                resultado.click()
                 
                 st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade III")
 
