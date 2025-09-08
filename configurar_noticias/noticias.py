@@ -272,35 +272,61 @@ if submit:
                 #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status II")
 
                 # --- Seleciona Grupo (Select2) ---
-                ## achar o campo grupos
-                seletor = navegador.find_element(
-                    By.ID,"s2id_grupos"
+                # espera overlay sumir
+                wait.until(EC.invisibility_of_element_located((By.ID, "select2-drop-mask")))
+
+                # agora clica no select2
+                elem = wait.until(
+                    EC.element_to_be_clickable((By.CSS_SELECTOR, "#s2id_grupos a.select2-choice"))
                 )
-                seletor.click()
+                navegador.execute_script("arguments[0].click();", elem)
                 
-                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade I")
+                # achar o campo grupos
+                #seletor = navegador.find_element(
+                #    By.ID,"s2id_grupos"
+                #)
+                #seletor.click()
+                
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade I")
+                
+                # abre o dropdown primeiro
+                navegador.execute_script("arguments[0].click();",
+                    navegador.find_element(By.CSS_SELECTOR, "#s2id_grupos a.select2-choice"))
+
+                # espera a lista carregar
+                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".select2-drop-active")))
+
+                # clica no item pelo texto
+                item = navegador.find_element(By.XPATH, "//div[contains(@class,'select2-result-label') and text()='Nome do Grupo']")
+                navegador.execute_script("arguments[0].click();", item)
+
 
                 # entra na div que esta o campo de grupos
-                camp = wait.until(
-                    EC.visibility_of_element_located((By.CSS_SELECTOR,"div.select2-container.select2-container-multi.form-control.select2-dropdown-open"))
-                )
-
-                # delimita quais campos e a sequência que existe dentro da div
-                search_input = camp.find_element(
-                    By.CSS_SELECTOR,"ul li input"
-                )
+                #camp = wait.until(
+                #    EC.visibility_of_element_located((By.CSS_SELECTOR,"div.select2-container.select2-container-multi.form-control.select2-dropdown-open"))
+                #)
+#
+                ## delimita quais campos e a sequência que existe dentro da div
+                #search_input = camp.find_element(
+                #    By.CSS_SELECTOR,"ul li input"
+                #)
 
                 #digita o valor da busca
-                search_input.send_keys("admin")
+                #search_input.send_keys("admin")
 
                 # esoera o li aparecer e seleciona o nome do grupo
-                item = wait.until(EC.element_to_be_clickable((
-                    By.XPATH,
-                    "//ul/li[.//text()[normalize-space()='admin']]"
-                )))
-                item.click()
+                #item = wait.until(EC.element_to_be_clickable((
+                #    By.XPATH,
+                #    "//ul/li[.//text()[normalize-space()='admin']]"
+                #)))
+                #item.click()
                 
-                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade III")
+                campo = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#s2id_grupos input.select2-input")))
+                campo.send_keys("admin")
+                campo.send_keys(Keys.ENTER)
+
+                
+                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Prioridade III")
 
                 # Clique em salvar
                 salvar = wait.until(EC.element_to_be_clickable((By.ID, "salvar-gerenciamento-noticia")))
