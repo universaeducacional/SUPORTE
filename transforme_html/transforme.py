@@ -10,7 +10,6 @@ from html import escape
 import pdfplumber
 from docx.oxml.ns import qn
 from docx.table import _Cell
-from bs4 import BeautifulSoup
 
 st.set_page_config(page_title="Conversor DOCX/PDF → HTML", layout="wide")
 
@@ -134,7 +133,7 @@ def docx_to_html(file_bytes):
             html.append(docx_table_to_html(block))
 
     html.append("</body></html>")
-    return beautify_html("\n".join(html))
+    return "\n".join(html)
 
 def pdf_to_html(file_bytes):
     html = ["<html>", "<head>", CSS_STYLE, "</head>", '<body class="center">']
@@ -146,11 +145,7 @@ def pdf_to_html(file_bytes):
                 for line in text.split("\n"):
                     html.append(f"<p>{escape(line)}</p>")
     html.append("</body></html>")
-    return beautify_html("\n".join(html))
-
-def beautify_html(raw_html: str) -> str:
-    soup = BeautifulSoup(raw_html, "html.parser")
-    return soup.prettify()
+    return "\n".join(html)
 
 def convert_to_html(file_bytes, ext):
     ext = ext.lower()

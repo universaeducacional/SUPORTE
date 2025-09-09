@@ -7,5 +7,4 @@ requests
 setuptools
 python-docx
 pdfplumber
-beautifulsoup4
 lxml
