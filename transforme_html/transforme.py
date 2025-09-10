@@ -15,23 +15,25 @@ st.set_page_config(page_title="Conversor DOCX/PDF → HTML", layout="wide")
 
 CSS_STYLE = """
 <style>
-    html { 
-        margin: 0; 
+    html{
+      margin: 0;
     }
     .center { 
-        margin: 20% 10% 30px; 
-        font-family: Times New Roman, serif;
-        text-align: justify; 
-        font-size: 15px; 
+      margin: 5px 5% 0; 
+      font-family: Times New Roman, serif;
+      text-align: justify; 
+      font-size: 14px; 
     }
-    table { 
-        border-collapse: collapse; 
-        margin: 10px 0; width: 100%; }
+    table, trr, tdd {
+      width: 100%;
+      border-collapse: collapse;
+      margin: auto;
+    }
     table, th, td { 
-        border: 1px solid black; 
+      border: 1px solid black; 
     }
     th, td { 
-        padding: 5px; 
+      padding: 5px; 
     }
 </style>
 """
