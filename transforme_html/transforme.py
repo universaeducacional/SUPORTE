@@ -118,7 +118,7 @@ def docx_table_to_html(table):
             colspan_attr = f' colspan="{colspan}"' if colspan > 1 else ""
             row_html.append(f"    <td{colspan_attr}>{cell_text}</td>")
         row_html.append("  </tr>")
-        rows_html.append("  </tbody>","\n".join(row_html))
+        rows_html.append(" </tbody> \n".join(row_html))
     return "<table>\n" + "\n".join(rows_html) + "\n</table>"
 
 def docx_to_html(file_bytes):
