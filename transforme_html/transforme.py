@@ -16,24 +16,26 @@ st.set_page_config(page_title="Conversor DOCX/PDF → HTML", layout="wide")
 CSS_STYLE = """
 <style>
     html{
-      margin: 0;
+        margin: 0;
     }
     .center { 
-      margin: 5px 5% 0; 
-      font-family: Times New Roman, serif;
-      text-align: justify; 
-      font-size: 14px; 
+        margin: 5px 5% 0; 
+        font-family: Times New Roman, serif;
+        text-align: justify; 
+        font-size: 14px; 
     }
-    table, trr, tdd {
-      width: 100%;
-      border-collapse: collapse;
-      margin: auto;
+    
+    .tabela-centralizada {
+        width: 100%;
+        margin: 5px auto;
+        border-collapse: collapse;
+        border: 1px solid black; /* borda externa da tabela */
     }
-    table, th, td { 
-      border: 1px solid black; 
-    }
-    th, td { 
-      padding: 5px; 
+    
+    .tabela-centralizada th,
+    .tabela-centralizada td {
+        border: 1px solid black; /* borda das células */
+        padding: 5px;
     }
 </style>
 """
@@ -103,6 +105,7 @@ def is_vmerge_continuation(cell):
 
 def docx_table_to_html(table):
     rows_html = []
+    row_html = ["  <tbody>"]
     for row in table._tbl.tr_lst:
         row_html = ["  <tr>"]
         for tc in row.tc_lst:
@@ -115,12 +118,12 @@ def docx_table_to_html(table):
             colspan_attr = f' colspan="{colspan}"' if colspan > 1 else ""
             row_html.append(f"    <td{colspan_attr}>{cell_text}</td>")
         row_html.append("  </tr>")
-        rows_html.append("\n".join(row_html))
+        rows_html.append("  </tbody>","\n".join(row_html))
     return "<table>\n" + "\n".join(rows_html) + "\n</table>"
 
 def docx_to_html(file_bytes):
     doc = Document(file_bytes)
-    html = ["<html>", "<head>", CSS_STYLE, "</head>", '<body class="center">']
+    html = [CSS_STYLE, '<div class="center">']
 
     for block in iter_block_items(doc):
         if isinstance(block, Paragraph):
@@ -134,11 +137,11 @@ def docx_to_html(file_bytes):
         elif isinstance(block, Table):
             html.append(docx_table_to_html(block))
 
-    html.append("</body></html>")
+    html.append("</div></html>")
     return "\n".join(html)
 
 def pdf_to_html(file_bytes):
-    html = ["<html>", "<head>", CSS_STYLE, "</head>", '<body class="center">']
+    html = [CSS_STYLE, '<div class="center">']
     with pdfplumber.open(file_bytes) as pdf:
         for page_num, page in enumerate(pdf.pages, start=1):
             text = page.extract_text()
@@ -146,7 +149,7 @@ def pdf_to_html(file_bytes):
                 html.append(f"<h2>Página {page_num}</h2>")
                 for line in text.split("\n"):
                     html.append(f"<p>{escape(line)}</p>")
-    html.append("</body></html>")
+    html.append("</div></html>")
     return "\n".join(html)
 
 def convert_to_html(file_bytes, ext):
