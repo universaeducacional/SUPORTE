@@ -144,7 +144,7 @@ if submit:
 
           
             # Screenshot antes do clique no menu
-            #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
+            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
 
 
             #st.info("Buscando menu 'Gerenciamento de Notícias'...")
@@ -162,7 +162,7 @@ if submit:
             navegador.execute_script("arguments[0].click();", opcao)
                 
             
-            #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
+            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
             
             # Screenshot após acessar o menu Gerenciamento de Notícias
             #screenshot_menu = navegador.get_screenshot_as_png()
@@ -170,8 +170,8 @@ if submit:
             #st.image(image_menu, caption=f"Screenshot após acessar menu em {url}", use_container_width=True)
             #st.write("Título após acessar menu:", navegador.title)
             
-            # espera até 10 segundos para os elementos aparecerem
-            time.sleep(2)
+            # espera até 5 segundos para os elementos aparecerem
+            time.sleep(5)
 
             # Espera até o botão estar clicável
             adicionar = wait.until(EC.element_to_be_clickable((By.ID, "btn-sis-gerenciamento-noticias-add")))
@@ -313,6 +313,7 @@ if submit:
 
 
     navegador.quit()
+
 
 
 
