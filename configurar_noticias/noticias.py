@@ -144,7 +144,7 @@ if submit:
 
           
             # Screenshot antes do clique no menu
-            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
+            #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
 
 
             #st.info("Buscando menu 'Gerenciamento de Notícias'...")
@@ -162,7 +162,7 @@ if submit:
             navegador.execute_script("arguments[0].click();", opcao)
                 
             
-            st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
+            #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Depois do clique no menu")
             
             # Screenshot após acessar o menu Gerenciamento de Notícias
             #screenshot_menu = navegador.get_screenshot_as_png()
@@ -229,7 +229,7 @@ if submit:
                 data_fim = wait.until(EC.element_to_be_clickable((By.ID, "dataFim")))
                 data_fim.clear()
                 data_fim.send_keys(DATA_FIM)
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data fim")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data fim")
             
                 # Preenche Prioridade
                 prioridade = wait.until(EC.element_to_be_clickable((By.ID, "prioridade")))
@@ -259,7 +259,7 @@ if submit:
                 time.sleep(0.5)
 
                 
-                st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status II")
+                #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após clicar em Status II")
 
                 # --- Seleciona Grupo (Select2) ---
                 # espera overlay sumir
@@ -313,6 +313,7 @@ if submit:
 
 
     navegador.quit()
+
 
 
 
