@@ -138,20 +138,10 @@ if submit:
             # espera até 10 segundos para os elementos aparecerem
             time.sleep(2)
             
-            
-            pesquisar = wait.until(EC.presence_of_element_located((By.ID,"pesMenu")))
-            pesquisar.send_keys("Gerenciamento de Notícias")
-                
-            # Screenshot após pesquisa
-            #screenshot_pesquisa = navegador.get_screenshot_as_png()
-            #image_pesquisa = Image.open(io.BytesIO(screenshot_pesquisa))
-            #st.image(image_pesquisa, caption=f"Screenshot após pesquisa em {url}", use_container_width=True)
-            #st.write("Título após pesquisa:", navegador.title)
-
-
             # clicar na barra de pesquisar menu
             pesquisar = wait.until(EC.presence_of_element_located((By.ID,"pesMenu")))
             pesquisar.send_keys("Gerenciamento de Notícias")
+
           
             # Screenshot antes do clique no menu
             #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Antes do clique no menu")
@@ -161,7 +151,7 @@ if submit:
             
             # Busca o elemento mesmo oculto
             opcao = WebDriverWait(navegador, 10).until(
-                EC.presence_of_element_located((By.XPATH, "//a[contains(text(), 'Gerenciamento de Notícias')]"))
+                EC.presence_of_element_located((By.XPATH, "//a/span[contains(text(),'Gerenciamento de Notícias')]"))
             )
 
             # Torna visível (se necessário)
@@ -323,6 +313,7 @@ if submit:
 
 
     navegador.quit()
+
 
 
 
