@@ -62,7 +62,7 @@ if submit:
     
     # força o uc a usar a versão exata do Chromium no container
     navegador = uc.Chrome(
-        version_main=141,  # versão do Chromium do Streamlit Cloud
+        version_main=143,  # versão do Chromium do Streamlit Cloud
         options=options
     )
     
@@ -313,6 +313,7 @@ if submit:
 
 
     navegador.quit()
+
 
 
 
