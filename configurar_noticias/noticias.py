@@ -111,7 +111,7 @@ if submit:
             # Espera até o input de usuário aparecer
             usuario_input = wait.until(EC.element_to_be_clickable((By.NAME, "username")))
             senha_input = wait.until(EC.element_to_be_clickable((By.ID, "senha")))
-            entrar_btn = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "arrow-wrapper")))
+            entrar_btn = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "btn-login")))
 
             
             # Preenche o formulário e clica no botão
