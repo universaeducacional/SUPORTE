@@ -28,3 +28,15 @@ HTML = htmldanoticia
 DATA_INICIO = datainicionoticia
 DATA_FIM = datafimnoticia
 ```
+
+
+## Atenção!
+
+Antes de iniciar a execução do processo, verifique se a versão do navegador Google Chrome instalada em seu computador é compatível com a versão definida no arquivo noticias.py. O trecho abaixo indica onde, no script, pode ser verificada a versão do Google Chrome que está sendo utilizada no momento:
+
+```
+navegador = uc.Chrome(
+        version_main=150,  # versão do Chromium do Streamlit Cloud
+        options=options
+    )
+```
