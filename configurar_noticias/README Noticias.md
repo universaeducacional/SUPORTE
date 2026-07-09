@@ -19,6 +19,7 @@ O seguinte pojeto trata da execução e configuração de forma automatizada das
 
 A automação é executada em segundo plano devido às limitações do Streamlit Community Cloud, que não permite a abertura e a interação direta com uma janela do navegador para o usuário. Dessa forma, o processo é realizado internamente no servidor, enquanto a página exibe as capturas de tela (prints) das etapas executadas, permitindo acompanhar o andamento da automação e identificar eventuais falhas.
 
+
 **Atenção!**
 
 Antes de iniciar a execução do processo, verifique se a versão do navegador Google Chrome instalada em seu computador é compatível com a versão definida no arquivo noticias.py. O trecho abaixo indica onde, no script, pode ser verificada a versão do Google Chrome que está sendo utilizada no momento:
