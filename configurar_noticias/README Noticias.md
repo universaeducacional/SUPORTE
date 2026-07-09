@@ -8,29 +8,18 @@ O seguinte pojeto trata da execução e configuração de forma automatizada das
 ## Como usar
 
 1. A configuração inicial é realizada de forma manual em um ambiente e após isso são adicionadas as credenciais de configuração no arquivo .env para que o processo seja realizado para os demais ambientes.
-2. Atualize os dados do arquivo dados_formulario.env.
-3. No powershell execute o seguinte comando:
-   ```
-   streamlit run noticias.py
-   ```
-4. Será aberta uma guia do navegador para que sejam informados os dados de login, preencha-os.
-5. Depois de preenchido selecione o botão para executar o processo e aguarde um momento, as urls começaram a serem abertas e a configuração será iniciada.
+2. Através do streamlit.io, será executado o script criado através da URL https://suporte-noticias.streamlit.app/
+3. No formulário disponibilizado pelo Streamlit serão informados os dados necessários para a execução do processo. Essas informações serão armazenadas temporariamente e utilizadas durante a execução da automação.
+4. Na própria página de preenchimento do formulário será executada a automação em segundo plano. Durante a execução, serão exibidas capturas de tela (prints) das etapas realizadas em cada ambiente, permitindo o acompanhamento do processo em tempo real.
+5. Caso ocorra algum erro durante a execução, será possível identificá-lo por meio das capturas de tela (prints) exibidas ao longo do processo. Dessa forma, será possível verificar em qual ambiente a automação falhou e realizar, se necessário, a configuração manual da notícia.
    
 
 
 ## Configurações
 
-Este projeto utiliza variáveis de ambiente para armazenar informações das configurações das notícias. Com os seguintes dados:
+A automação é executada em segundo plano devido às limitações do Streamlit Community Cloud, que não permite a abertura e a interação direta com uma janela do navegador para o usuário. Dessa forma, o processo é realizado internamente no servidor, enquanto a página exibe as capturas de tela (prints) das etapas executadas, permitindo acompanhar o andamento da automação e identificar eventuais falhas.
 
-```env
-TITULO = titulonoticia
-HTML = htmldanoticia
-DATA_INICIO = datainicionoticia
-DATA_FIM = datafimnoticia
-```
-
-
-## Atenção!
+#### Atenção!
 
 Antes de iniciar a execução do processo, verifique se a versão do navegador Google Chrome instalada em seu computador é compatível com a versão definida no arquivo noticias.py. O trecho abaixo indica onde, no script, pode ser verificada a versão do Google Chrome que está sendo utilizada no momento:
 
