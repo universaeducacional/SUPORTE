@@ -236,6 +236,7 @@ if submit:
                 prioridade = wait.until(EC.element_to_be_clickable((By.ID, "prioridade")))
                 prioridade.clear()
                 prioridade.send_keys("3")
+                prioridade.send_keys(Keys.ENTER)
                 #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher prioridade")
 
                 # Seleciona Status (Select2 sem campo de busca)
