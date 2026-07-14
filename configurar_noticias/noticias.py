@@ -259,7 +259,18 @@ if submit:
                         selecao.click()
                         break
                     except ElementClickInterceptedException:
-                        time.sleep(1)
+                        elemento = navegador.execute_script("""
+                            var r = arguments[0].getBoundingClientRect();
+                            return document.elementFromPoint(
+                                r.left + r.width/2,
+                                r.top + r.height/2
+                        ).outerHTML;
+                     """, selecao)
+
+                    print(elemento)
+                    st.code(elemento)
+
+                    time.sleep(1)
                 else:
                     raise Exception("Não foi possível clicar no campo Status.")
 
