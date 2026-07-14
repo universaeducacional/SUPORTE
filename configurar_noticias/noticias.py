@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.action_chains import ActionChains
@@ -239,17 +240,52 @@ if submit:
 
                 # Seleciona Status (Select2 sem campo de busca)
                 # abrir seleção de status
-                selecao = navegador.find_element(
-                    By.ID,
-                    "s2id_status"
+                # Aguarda o Select2 ficar clicável
+                selecao = wait.until(
+                    EC.element_to_be_clickable((By.ID, "s2id_status"))
                 )
-                selecao.click()
+
+                # Centraliza o elemento na tela
+                navegador.execute_script(
+                    "arguments[0].scrollIntoView({block: 'center'});",
+                    selecao
+                )
+
+                time.sleep(0.3)
+
+                # Tenta clicar até 3 vezes
+                for tentativa in range(3):
+                    try:
+                        selecao.click()
+                        break
+                    except ElementClickInterceptedException:
+                    time.sleep(1)
+                else:
+                    raise Exception("Não foi possível clicar no campo Status.")
+
+                # Aguarda a opção aparecer
+                select = wait.until(
+                    EC.element_to_be_clickable(
+                        (
+                            By.XPATH,
+                            "//ul[contains(@class,'select2-results')]//div[normalize-space()='Ativo']"
+                        )
+                    )
+                )
+
+                select.click()
+            
+             #    selecao = navegador.find_element(
+              #       By.ID,
+             #        "s2id_status"
+              #   )
+             #    selecao.click()
 
                 # clicar na situação
-                select = wait.until(
-                    EC.element_to_be_clickable((By.XPATH,"//ul[contains(@class,'select2-results')]//div[normalize-space()='Ativo']"))
-                )
-                select.click()
+              #   select = wait.until(
+             #        EC.element_to_be_clickable((By.XPATH,"//ul[contains(@class,'select2-results')]//div[normalize-space()='Ativo']"))
+              #   )
+              #   select.click()
 
                 # achar o campo grupos
                 seletor = navegador.find_element(
