@@ -258,6 +258,10 @@ if submit:
                 # Tenta clicar até 3 vezes
                 for tentativa in range(3):
                     try:
+                        st.image(
+                            Image.open(io.BytesIO(navegador.get_screenshot_as_png())),
+                            caption="Antes do clique em Status"
+                        )
                         selecao.click()
                         break
                     except ElementClickInterceptedException:
