@@ -230,7 +230,8 @@ if submit:
                 data_fim = wait.until(EC.element_to_be_clickable((By.ID, "dataFim")))
                 data_fim.clear()
                 data_fim.send_keys(DATA_FIM)
-                titulo.click()
+                modal = navegador.find_element(By.ID, "modalNoticia")
+                ActionChains(navegador).move_to_element_with_offset(modal, 20, 20).click().perform()
                 time.sleep(1)
                 #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data fim")
             
