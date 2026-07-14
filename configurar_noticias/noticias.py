@@ -230,7 +230,7 @@ if submit:
                 data_fim = wait.until(EC.element_to_be_clickable((By.ID, "dataFim")))
                 data_fim.clear()
                 data_fim.send_keys(DATA_FIM)
-                ActionChains(navegador).send_keys(Keys.ESCAPE).perform()
+                titulo.click()
                 time.sleep(1)
                 #st.image(Image.open(io.BytesIO(navegador.get_screenshot_as_png())), caption="Após preencher data fim")
             
