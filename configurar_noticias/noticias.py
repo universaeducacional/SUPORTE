@@ -259,7 +259,7 @@ if submit:
                         selecao.click()
                         break
                     except ElementClickInterceptedException:
-                    time.sleep(1)
+                        time.sleep(1)
                 else:
                     raise Exception("Não foi possível clicar no campo Status.")
 
